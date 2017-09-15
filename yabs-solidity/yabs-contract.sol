@@ -14,4 +14,9 @@ contract Yabs {
   function addPoints(address user, uint points) {
     balances[user][msg.sender] = balances[user][msg.sender] + points;
   }
+
+  function claimPromoCode(address retailer, uint points) {
+    assert(balances[msg.sender][retailer] >= points);
+    balances[msg.sender][retailer] = balances[msg.sender][retailer] - points;
+  }
 }
