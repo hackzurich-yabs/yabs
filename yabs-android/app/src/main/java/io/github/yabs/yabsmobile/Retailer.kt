@@ -1,3 +1,5 @@
 package io.github.yabs.yabsmobile
 
-data class Retailer(val name: String, val coins: String)
+import java.io.Serializable
+
+data class Retailer(val name: String, val coins: String) : Serializable
