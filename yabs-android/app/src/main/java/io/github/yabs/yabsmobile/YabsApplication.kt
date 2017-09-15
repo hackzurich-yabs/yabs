@@ -1,12 +1,12 @@
 package io.github.yabs.yabsmobile
 
-import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
+import android.support.multidex.MultiDexApplication
 import com.elpassion.android.commons.sharedpreferences.createSharedPrefs
 import com.elpassion.sharedpreferences.gsonadapter.gsonConverterAdapter
 
-class YabsApplication : Application() {
+class YabsApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

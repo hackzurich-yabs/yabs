@@ -3,11 +3,13 @@ package io.github.yabs.yabsmobile
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.retailer_item.view.*
 import org.web3j.crypto.WalletUtils
 import java.io.File
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,10 +23,13 @@ class MainActivity : AppCompatActivity() {
             WalletUtils.generateFullNewWalletFile("password", File(filesDir, "credentials"))
             isUserCreated = true
         }
-        hello.setOnClickListener {
-            val integrator = IntentIntegrator(this)
-            integrator.initiateScan()
+        retailerListView.layoutManager = LinearLayoutManager(this)
+        retailerListView.adapter = basicAdapterWithLayoutAndBinder(listOf(Retailer("Bierdron", "15")), R.layout.retailer_item) { holder, item ->
+            holder.itemView.retailerName.text = item.name
+            holder.itemView.retailerCoinsCount.text = item.coins
         }
+//            val integrator = IntentIntegrator(this)
+//            integrator.initiateScan()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
