@@ -26,5 +26,3 @@ class DataStarter implements CommandLineRunner {
     }
 
 }
-
-
