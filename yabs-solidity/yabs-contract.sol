@@ -1,6 +1,5 @@
 pragma solidity ^0.4.16;
 
-
 contract Yabs {
 
     mapping (address => mapping (address => uint256)) public balances;
@@ -34,6 +33,16 @@ contract Yabs {
 
     function createBuyOffer(uint256 id, address retailer, uint256 points, uint256 yabs) {
         buyOffers[msg.sender][id] = Offer(retailer, points, yabs);
+    }
+
+    function acceptBuyOffer(address user, uint256 id) {
+        var offer = buyOffers[user][id];
+        assert(balances[user][0x0] >= offer.yabs);
+        assert(balances[msg.sender][offer.retailer] >= offer.points);
+        balances[user][0x0] = balances[user][0x0] - offer.yabs;
+        balances[msg.sender][0x0] = balances[msg.sender][0x0] + offer.yabs;
+        balances[user][offer.retailer] = balances[user][offer.retailer] + offer.points;
+        balances[msg.sender][offer.retailer] = balances[msg.sender][offer.retailer] - offer.points;
     }
 
     function createSellOffer(uint256 id, address retailer, uint256 points, uint256 yabs) {
