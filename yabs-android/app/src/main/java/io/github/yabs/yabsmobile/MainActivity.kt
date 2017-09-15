@@ -2,7 +2,6 @@ package io.github.yabs.yabsmobile
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,13 +11,16 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
+    private var isUserCreated by sharedPrefsProvider<Boolean>().asProperty("isUserCreated")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        WalletUtils.generateFullNewWalletFile("password", File(get))
-
+        if (isUserCreated != null) {
+            WalletUtils.generateFullNewWalletFile("password", File(filesDir, "credentials"))
+            isUserCreated = true
+        }
         hello.setOnClickListener {
             val integrator = IntentIntegrator(this)
             integrator.initiateScan()
