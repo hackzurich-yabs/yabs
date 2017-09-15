@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class DemoApplication {
+class YabsApplication {
 
     static void main(String[] args) {
-        SpringApplication.run(DemoApplication, args)
+        SpringApplication.run(YabsApplication, args)
     }
 
 }
