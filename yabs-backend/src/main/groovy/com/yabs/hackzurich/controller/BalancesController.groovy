@@ -1,7 +1,7 @@
 package com.yabs.hackzurich.controller
 
-import com.yabs.hackzurich.dto.RetailerData
-import com.yabs.hackzurich.service.RetailersService
+import com.yabs.hackzurich.dto.BalanceData
+import com.yabs.hackzurich.service.BalancesService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @CompileStatic
-class RetailersController {
+class BalancesController {
 
     @Autowired
-    private RetailersService retailersService
+    private BalancesService balancesService
 
-    @RequestMapping(value = "/getRetailers", method = RequestMethod.GET, produces = 'application/json')
+    @RequestMapping(value = "/getBalances", method = RequestMethod.GET, produces = 'application/json')
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    List<RetailerData> list() {
-        return retailersService.list()
+    List<BalanceData> getBalances(String userPublicKey) {
+        return balancesService.getBalancesForUser(userPublicKey)
     }
-}
 
+}

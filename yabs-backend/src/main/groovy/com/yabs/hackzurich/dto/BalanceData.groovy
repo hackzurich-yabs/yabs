@@ -1,11 +1,12 @@
 package com.yabs.hackzurich.dto
 
 import groovy.transform.CompileStatic
-import jdk.nashorn.internal.ir.annotations.Immutable
+import groovy.transform.Immutable
 
 @CompileStatic
 @Immutable
-class RetailerDto {
+class BalanceData {
     String publicKey
     String name
+    BigInteger balance
 }
