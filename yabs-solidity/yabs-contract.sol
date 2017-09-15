@@ -10,4 +10,8 @@ contract Yabs {
   function getBalance(address user, address retailer) constant returns (uint) {
     return balances[user][retailer];
   }
+
+  function addPoints(address user, uint points) {
+    balances[user][msg.sender] = balances[user][msg.sender] + points;
+  }
 }
