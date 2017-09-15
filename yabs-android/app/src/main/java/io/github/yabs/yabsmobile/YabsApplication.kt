@@ -17,4 +17,4 @@ class YabsApplication : MultiDexApplication() {
 var contextProvider: () -> Context = { TODO() }
 
 inline fun <reified T> sharedPrefsProvider() =
-        createSharedPrefs({ PreferenceManager.getDefaultSharedPreferences(contextProvider()) }, gsonConverterAdapter<T>())
+        createSharedPrefs({ PreferenceManager.getDefaultSharedPreferences(contextProvider()) }, gsonConverterAdapter<T>(gson = gsonProvider))
