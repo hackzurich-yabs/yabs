@@ -1,0 +1,1 @@
+solc Yabs.sol --overwrite --bin --abi --optimize -o .
