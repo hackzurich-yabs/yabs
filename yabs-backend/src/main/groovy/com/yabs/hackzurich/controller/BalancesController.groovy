@@ -5,6 +5,7 @@ import com.yabs.hackzurich.service.BalancesService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
@@ -18,10 +19,10 @@ class BalancesController {
     @Autowired
     private BalancesService balancesService
 
-    @RequestMapping(value = "/getBalances", method = RequestMethod.GET, produces = 'application/json')
+    @RequestMapping(value = "/getBalances/{key}", method = RequestMethod.GET, produces = 'application/json')
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    List<BalanceData> getBalances(String userPublicKey) {
+    List<BalanceData> getBalances(@PathVariable(name = 'key') String userPublicKey) {
         return balancesService.getBalancesForUser(userPublicKey)
     }
 
