@@ -1,4 +1,4 @@
-package com.yabs.hackzurich.contract;
+package com.yabs.hackzurich.solidity;
 
 import java.math.BigInteger;
 import java.util.Arrays;
