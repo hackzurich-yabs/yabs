@@ -50,6 +50,7 @@ class RetailerDetails : AppCompatActivity() {
                 disposable = Companion.claimPointsApi.claim(walletManager.getWallet().address, retailer.publicKey, scanResult.contents)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(IoScheduler())
+                        .bindLoader(progressBar)
                         .subscribe({
                             Toast.makeText(this, "Wyslano", Toast.LENGTH_LONG).show()
                         }, {
