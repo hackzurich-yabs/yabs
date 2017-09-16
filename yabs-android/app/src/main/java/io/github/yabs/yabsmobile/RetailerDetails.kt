@@ -25,7 +25,7 @@ import org.web3j.tx.ManagedTransaction
 class RetailerDetails : AppCompatActivity() {
 
     private val retailer by lazy { intent.getSerializableExtra(RETAILER_KEY) as Retailer }
-    private val web3 = JsonRpc2_0Web3j(InfuraHttpService("https://morden.infura.io/your-token"))
+    private val web3 by lazy { JsonRpc2_0Web3j(InfuraHttpService("https://rinkeby.infura.io/0ZevQ4HkUCzCVBOsYZcQ")) }
 
     private var disposable: Disposable? = null
 
@@ -47,10 +47,13 @@ class RetailerDetails : AppCompatActivity() {
                     .flatMap {
                         claimPromoApi.claim(walletManager.getWallet().address, retailer.publicKey, it.transactionHash, points.value)
                     }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(IoScheduler())
                     .subscribe({
                         Toast.makeText(this, "PromoCode : $it", Toast.LENGTH_LONG).show()
                     }, {
                         Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
+                        Log.e("kasper", "$it")
                     })
         }
     }

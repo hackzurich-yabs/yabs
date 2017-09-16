@@ -52,9 +52,10 @@ dependencies {
     implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.8.1'
     implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: retrofit_version
     implementation 'com.google.code.gson:gson:2.8.1'
-    implementation ("com.elpassion.android.commons:recycler:$android_commons_version"){
+    implementation("com.elpassion.android.commons:recycler:$android_commons_version") {
         exclude group: "com.android.support"
     }
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
