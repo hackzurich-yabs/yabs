@@ -49,7 +49,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         dialogPositiveButton.setOnClickListener {
             val points = BigInteger(offerPointsAmount.text.toString())
             val yabs = BigInteger(offerYabsPointsAmount.text.toString())
-            disposable = createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailersKey = retailer.publicKey))
+            disposable = createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailerKey = retailer.publicKey))
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .bindLoader(progressBar)
@@ -62,7 +62,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
     }
 
     private fun bindOffer(holder: ViewHolderBinder<OfferData>, offer: OfferData) = with(holder.itemView) {
-        buyOfferYabsTextView.text = offer.points.toString()
+        buyOfferPointsTextView.text = offer.points.toString()
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
         setOnClickListener {

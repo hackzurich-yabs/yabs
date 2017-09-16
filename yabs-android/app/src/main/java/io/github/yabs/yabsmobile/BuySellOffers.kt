@@ -7,6 +7,6 @@ data class BuySellOffers(val buyOffers: List<OfferData>,
 
 data class OfferData(val userKey: String,
                      val uid: Long,
-                     val retailersKey: String,
+                     val retailerKey: String,
                      val points: BigInteger,
                      val yabsPoints: BigInteger)

@@ -34,10 +34,10 @@ class RetailerDetails : AppCompatActivity() {
             PromoCodeActivity.start(this, retailer)
         }
         sellPointsButton.setOnClickListener {
-            SellOffersActivity.start(this, retailer)
+            BuyOffersActivity.start(this, retailer)
         }
         buyPointsButton.setOnClickListener {
-            BuyOffersActivity.start(this, retailer)
+            SellOffersActivity.start(this, retailer)
         }
     }
 

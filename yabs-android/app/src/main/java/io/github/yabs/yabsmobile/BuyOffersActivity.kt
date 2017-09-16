@@ -12,24 +12,24 @@ class BuyOffersActivity : BuySellOfferActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        offersListTitle.text = "Buy offers"
-        dialogTitle.text = "Buy offer"
+        offersListTitle.text = "You are selling"
+        dialogTitle.text = "Sell ${retailer.name} points"
     }
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.buyOffers
 
     override fun fulFillOffer(uid: Long, userKey: String): Completable {
-        return yabContractService.executeRx { acceptSellOffer(Address(userKey), Uint256(uid)) }
+        return yabContractService.executeRx { acceptBuyOffer(Address(userKey), Uint256(uid)) }
                 .flatMapCompletable {
-                    BuySellOfferActivity.api.acceptSellOffer(userKey, uid, it.transactionHash)
+                    BuySellOfferActivity.api.acceptBuyOffer(userKey, uid, it.transactionHash)
                 }
     }
 
     override fun createOffer(offerData: OfferData): Completable {
         val randomGen = Random()
         val uid = Math.abs(randomGen.nextLong())
-        return yabContractService.executeRx { createBuyOffer(Uint256(uid), Address(retailer.publicKey), Uint256(offerData.points), Uint256(offerData.yabsPoints)) }
-                .flatMapCompletable { api.createBuyOffer(offerData.copy(uid = uid)) }
+        return yabContractService.executeRx { createSellOffer(Uint256(uid), Address(retailer.publicKey), Uint256(offerData.points), Uint256(offerData.yabsPoints)) }
+                .flatMapCompletable { api.createSellOffer(offerData.copy(uid = uid)) }
     }
 
     companion object {
