@@ -16,6 +16,7 @@ import java.nio.file.Files
 @Slf4j
 class WalletService {
 
+    private final BigInteger defaultPromoCodePrice = 500
     private final String password = "password"
     private final File retailersDirectory = new File(this.class.classLoader.getResource('retailers').toURI())
     private final File tempDirectory = Files.createTempDirectory("wallets").toFile()
@@ -26,17 +27,20 @@ class WalletService {
     private RetailerRepository retailerRepository
 
     void loadRetailersFromFiles() {
-        retailersDirectory.listFiles().collect { File file ->
-            retailerRepository.save(new Retailer(
-                publicKey: readCredentialsFromFile(file).address,
-                walletFileName: file.name,
-                name: file.name.replace('.json', '')
-            ))
-        }
+        retailersDirectory.listFiles().collect { File file -> retailerRepository.save(buildRetailer(file)) }
     }
 
     Credentials readCredentials(String walletFile) {
         return WalletUtils.loadCredentials(password, new File(retailersDirectory, walletFile))
+    }
+
+    private Retailer buildRetailer(File file) {
+        new Retailer(
+            publicKey: readCredentialsFromFile(file).address,
+            walletFileName: file.name,
+            name: file.name.replace('.json', ''),
+            promoCodePrice: defaultPromoCodePrice
+        )
     }
 
     private Credentials readCredentialsFromFile(File walletFile) {

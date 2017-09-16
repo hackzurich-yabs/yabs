@@ -9,4 +9,5 @@ class BalanceData {
     String publicKey
     String name
     BigInteger balance
+    BigInteger promoCodePrice
 }

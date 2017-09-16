@@ -20,4 +20,7 @@ class Retailer {
 
     @Column(nullable = false)
     String name
+
+    @Column(nullable = false)
+    BigInteger promoCodePrice
 }
