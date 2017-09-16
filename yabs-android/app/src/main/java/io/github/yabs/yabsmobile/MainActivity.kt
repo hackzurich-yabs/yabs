@@ -15,19 +15,26 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    private var isUserCreated by sharedPrefsProvider<Boolean>().asProperty("isUserCreated")
-    private val retailersApi by lazy { RetailersApi.INSTANCE }
+    private var walletFileName by sharedPrefsProvider<String>().asProperty("walletFile")
+    private val retailersApi by lazy { BalancesApi.INSTANCE }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (isUserCreated != null) {
-            WalletUtils.generateFullNewWalletFile("password", File(filesDir, "credentials"))
-            isUserCreated = true
+        val credentialsVault = File(filesDir, "credentials")
+        if (!credentialsVault.exists()) {
+            credentialsVault.mkdir()
         }
+        if (walletFileName == null) {
+            val fullNewWalletFile = WalletUtils.generateLightNewWalletFile("password", credentialsVault)
+            walletFileName = fullNewWalletFile
+            Log.e("kasper", "wallet created $fullNewWalletFile")
+        }
+        val wallet = WalletUtils.loadCredentials("password", File(credentialsVault, walletFileName))
+
         retailerListView.layoutManager = LinearLayoutManager(this)
-        retailersApi.call()
+        retailersApi.balances(wallet.ecKeyPair.publicKey.toString())
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -39,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }, {
-                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(listOf(Retailer("biedron", "15")), R.layout.retailer_item) { holder, item ->
+                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(listOf(Retailer(name = "biedron", coins = "15", publicKey = "123")), R.layout.retailer_item) { holder, item ->
                         holder.itemView.retailerName.text = item.name
                         holder.itemView.retailerCoinsCount.text = item.coins
                         holder.itemView.setOnClickListener {
