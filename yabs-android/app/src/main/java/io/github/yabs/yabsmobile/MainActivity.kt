@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     fun setImageResource(name: String) : Int {
         when(name) {
             "Coop" -> return R.drawable.coop
-            "Fashwell" -> return R.drawable.fashwell
+            "Swiss" -> return R.drawable.swiss
             "Siroop" -> return R.drawable.siroop
             "Zalando" -> return R.drawable.zalando
             else -> throw RuntimeException()
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     fun setGradientResource(name: String) : Int {
         when(name) {
             "Coop" -> return R.drawable.coop_item_gradient
-            "Fashwell" -> return R.drawable.fashwell_item_gradient
+            "Swiss" -> return R.drawable.swiss_item_gradient
             "Siroop" -> return R.drawable.siroop_item_gradient
             "Zalando" -> return R.drawable.zalando_item_gradient
             else -> throw RuntimeException()
