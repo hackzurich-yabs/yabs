@@ -32,19 +32,19 @@
             android:gravity="center">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Points: "
-                android:textColor="@color/textColor"
-                android:textSize="20dp" />
-
-            <TextView
                 android:id="@+id/retailerCoinsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
                 android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" points"
+                android:textColor="@color/textColor"
+                android:textSize="20dp" />
 
         </LinearLayout>
 

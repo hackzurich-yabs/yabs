@@ -26,13 +26,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Points: "
-                android:textColor="@color/textColor"
-                android:textSize="20sp" />
-
-            <TextView
                 android:id="@+id/retailerCoinsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,6 +33,13 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:text="1000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" points"
+                android:textColor="@color/textColor"
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
