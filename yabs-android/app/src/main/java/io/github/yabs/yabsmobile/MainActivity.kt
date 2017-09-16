@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         disposable?.dispose()
-        disposable = retailersApi.balances(wallet.ecKeyPair.publicKey.toString())
+        disposable = retailersApi.balances(wallet.address)
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
