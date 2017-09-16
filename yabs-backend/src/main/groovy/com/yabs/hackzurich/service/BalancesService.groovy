@@ -1,7 +1,7 @@
 package com.yabs.hackzurich.service;
 
-import com.yabs.hackzurich.dto.BalanceData;
-import com.yabs.hackzurich.solidity.SolidityUtils;
+import com.yabs.hackzurich.dto.BalanceData
+import com.yabs.hackzurich.solidity.SolidityService;
 import com.yabs.hackzurich.solidity.YabsContract;
 import groovy.transform.CompileStatic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +12,18 @@ import org.web3j.abi.datatypes.Address;
 @CompileStatic
 class BalancesService {
 
-    private final RetailersService retailersService;
+    private final RetailersService retailersService
+    private final SolidityService solidityService
 
     @Autowired
-    BalancesService(RetailersService retailersService) {
-        this.retailersService = retailersService;
+    BalancesService(RetailersService retailersService, SolidityService solidityService) {
+        this.retailersService = retailersService
+        this.solidityService = solidityService
     }
 
     List<BalanceData> getBalancesForUser(final String userPublicKey) {
 
-        final YabsContract contract = SolidityUtils.getYabsContract();
+        final YabsContract contract = solidityService.getYabsContract()
 
         retailersService.list()
                 .collect {
