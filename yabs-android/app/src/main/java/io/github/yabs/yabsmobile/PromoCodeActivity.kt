@@ -60,7 +60,7 @@ class PromoCodeActivity : AppCompatActivity() {
         } else {
             claimPromoCodeButton.hide()
             claimPromoCodeInsufficient.show()
-            claimPromoCodeInsufficient.text = "You need ${retailer.promoCodePrice - retailer.balance} points more"
+            claimPromoCodeInsufficient.text = "You need ${retailer.promoCodePrice - retailer.balance} more points"
         }
     }
 
