@@ -1,6 +1,7 @@
 package com.yabs.hackzurich.controller
 
 import com.yabs.hackzurich.dto.OfferData
+import com.yabs.hackzurich.dto.OffersData
 import com.yabs.hackzurich.service.OffersService
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
@@ -20,15 +23,38 @@ class OffersController {
     @Autowired
     private OffersService offersService
 
-    @RequestMapping(value = 'createBuyOffer', method = RequestMethod.POST, consumes = 'application/json')
+    @RequestMapping(value = '/createBuyOffer', method = RequestMethod.POST, consumes = 'application/json')
     @ResponseStatus(HttpStatus.OK)
     void createBuyOffer(@RequestBody OfferData offer) {
-//        log.info(offer as String)
         offersService.createBuyOffer(offer)
     }
 
-//    @RequestMapping(value = 'getOffers', method = RequestMethod.GET, produces = 'application/json')
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    List<>
+    @RequestMapping(value = '/createSellOffer', method = RequestMethod.POST, consumes = 'application/json')
+    @ResponseStatus(HttpStatus.OK)
+    void createSaleOffer(@RequestBody OfferData offer) {
+        offersService.createSaleOffer(offer)
+    }
+
+    @RequestMapping(value = '/acceptBuyOffer', method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    void acceptBuyOffer(@RequestParam String userKey,
+                        @RequestParam Long uid,
+                        @RequestParam String transactionHash) {
+        // todo
+    }
+
+    @RequestMapping(value = '/acceptSellOffer', method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    void acceptSellOffer(@RequestParam String userKey,
+                        @RequestParam Long uid,
+                        @RequestParam String transactionHash) {
+        // todo
+    }
+
+    @RequestMapping(value = '/getOffers', method = RequestMethod.GET, produces = 'application/json')
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    OffersData getOffers(@RequestParam String retailerKey) {
+        offersService.getOffersForRetailer(retailerKey)
+    }
 }
