@@ -15,12 +15,17 @@ class MainActivity : AppCompatActivity() {
 
     private val retailersApi by lazy { BalancesApi.INSTANCE }
     private var disposable: Disposable? = null
+    private val wallet by lazy { walletManager.getWallet() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val wallet = walletManager.getWallet()
         retailerListView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposable?.dispose()
         disposable = retailersApi.balances(wallet.ecKeyPair.publicKey.toString())
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
