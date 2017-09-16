@@ -39,23 +39,34 @@ class MainActivity : AppCompatActivity() {
                 .bindLoader(progressBar)
                 .subscribe({
                     retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.main_retailer_field) { holder, item ->
-                        holder.itemView.retailerImageView.setImageResource(getImageResource(item.name))
+                        holder.itemView.retailerImageView.setImageResource(setImageResource(item.name))
                         holder.itemView.pointsCountTextView.text = item.balance
                         holder.itemView.setOnClickListener { _ ->
                             RetailerDetails.start(this, item)
                         }
+                        holder.itemView.retailerItemLayout.setBackgroundResource(setGradientResource(item.name))
                     }
                 }, {
                     Log.e("kasper", "$it")
                 })
     }
 
-    fun getImageResource(name: String) : Int {
+    fun setImageResource(name: String) : Int {
         when(name) {
             "Coop" -> return R.drawable.coop
             "Fashwell" -> return R.drawable.fashwell
             "Siroop" -> return R.drawable.siroop
             "Zalando" -> return R.drawable.zalando
+            else -> throw RuntimeException()
+        }
+    }
+
+    fun setGradientResource(name: String) : Int {
+        when(name) {
+            "Coop" -> return R.drawable.coop_item_gradient
+            "Fashwell" -> return R.drawable.fashwell_item_gradient
+            "Siroop" -> return R.drawable.siroop_item_gradient
+            "Zalando" -> return R.drawable.zalando_item_gradient
             else -> throw RuntimeException()
         }
     }
