@@ -24,7 +24,6 @@ import java.math.BigInteger
 class PromoCodeActivity : AppCompatActivity() {
 
     private val retailer by lazy { intent.getSerializableExtra(RETAILER_KEY) as Retailer }
-    private val yabsAmount by lazy { intent.getSerializableExtra(YABS_KEY) as BigInteger }
 
     private var disposable: Disposable? = null
 
@@ -36,7 +35,6 @@ class PromoCodeActivity : AppCompatActivity() {
         retailerCoinsTextView.text = retailer.balance
         yourPromoCodes.text = "Your ${retailer.name} promo codes"
         promoCodeListView.layoutManager = LinearLayoutManager(this)
-        yabsAmountText.text = "$yabsAmount yabs"
         claimPromoCodeButton.setOnClickListener {
             val points = Uint256(200)
             disposable = yabContractService
@@ -59,6 +57,7 @@ class PromoCodeActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         callForPromoCodes()
+        yabsAmountText.reload()
     }
 
     private fun callForPromoCodes() {
@@ -78,18 +77,17 @@ class PromoCodeActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         disposable?.dispose()
+        yabsAmountText.stopLoading()
         super.onDestroy()
     }
 
     companion object {
-        fun start(context: Context, retailer: Retailer, yabsAmount: BigInteger) {
+        fun start(context: Context, retailer: Retailer) {
             context.startActivity(Intent(context, PromoCodeActivity::class.java)
-                    .putExtra(RETAILER_KEY, retailer)
-                    .putExtra(YABS_KEY, yabsAmount))
+                    .putExtra(RETAILER_KEY, retailer))
         }
 
         private const val RETAILER_KEY = "retailer"
-        private const val YABS_KEY = "amount"
 
         lateinit var yabContractService: YabContractService
         lateinit var claimPromoApi: ClaimPromoCodeApi

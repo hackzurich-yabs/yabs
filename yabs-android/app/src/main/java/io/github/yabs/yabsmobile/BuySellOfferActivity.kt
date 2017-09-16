@@ -75,19 +75,9 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        refreshYabs()
+        yabsAmountText.reload()
     }
 
-    private fun refreshYabs() {
-        disposable.add(yabContractService.executeRx { getYabs(walletManager.getWallet()) }
-                .subscribeOn(IoScheduler())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    yabsAmountText.text = "${it.value} yabs"
-                }, {
-                    Log.e("kasper", "msg $it")
-                }))
-    }
 
     private fun Activity.hideKeyboard() {
         val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -100,7 +90,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
         setOnClickListener { _ ->
             disposable.add(fulFillOffer(offer.uid, offer.userKey).toObservable<Unit>()
-                    .flatMap { yabContractService.executeRx { getYabs(walletManager.getWallet()) } }
+                    .flatMap { yabContractService.executeRx { getYabs(it) } }
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .bindLoader(progressBar)
@@ -119,6 +109,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         disposable.clear()
+        yabsAmountText.stopLoading()
         super.onDestroy()
     }
 

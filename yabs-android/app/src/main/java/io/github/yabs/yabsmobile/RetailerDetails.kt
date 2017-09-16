@@ -39,21 +39,14 @@ class RetailerDetails : AppCompatActivity() {
         buyPointsButton.setOnClickListener {
             YouAreBuyingActivity.start(this, retailer)
         }
+        claimPromoButton.setOnClickListener {
+            PromoCodeActivity.start(this, retailer)
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        disposable.add(yabContractService.executeRx { getYabs(BuySellOfferActivity.walletManager.getWallet()) }
-                .subscribeOn(IoScheduler())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    yabsAmountText.text = "${it.value} yabs"
-                    claimPromoButton.setOnClickListener { _ ->
-                        PromoCodeActivity.start(this, retailer, it.value)
-                    }
-                }, {
-                    Log.e("kasper", "msg $it")
-                }))
+        yabsAmountText.reload()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -81,6 +74,7 @@ class RetailerDetails : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        yabsAmountText.stopLoading()
         disposable.clear()
         super.onDestroy()
     }
