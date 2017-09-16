@@ -69,7 +69,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
         setOnClickListener {
-            disposable = fulFillOffer(offer.uid, walletManager.getWallet().address)
+            disposable = fulFillOffer(offer.uid, offer.userKey)
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .bindLoader(progressBar)
