@@ -93,7 +93,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
     private fun bindOffer(holder: ViewHolderBinder<OfferData>, offer: OfferData) = with(holder.itemView) {
         buyOfferPointsTextView.text = offer.points.toString()
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
-        buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
+        buyOfferRateTextView.text = String.format("%.4f", offer.points.toDouble() / offer.yabsPoints.toDouble())
         setOnClickListener { _ ->
             disposable.add(fulFillOffer(offer.uid, offer.userKey).toObservable<Unit>()
                     .flatMap { yabContractService.executeRx { getYabs(it) } }
