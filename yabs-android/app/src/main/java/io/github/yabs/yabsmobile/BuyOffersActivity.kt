@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
+import org.web3j.abi.datatypes.Address
+import org.web3j.abi.datatypes.generated.Uint256
 
 class BuyOffersActivity : BuySellOfferActivity() {
 
@@ -15,7 +17,12 @@ class BuyOffersActivity : BuySellOfferActivity() {
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.buyOffers
 
-    override fun fulFillOffer(uid: Long, userKey: String) = BuySellOfferActivity.api.acceptSellOffer(userKey, uid, "txHash")
+    override fun fulFillOffer(uid: Long, userKey: String): Completable {
+        return yabContractService.executeRx { acceptSellOffer(Address(userKey), Uint256(uid)) }
+                .flatMapCompletable {
+                    BuySellOfferActivity.api.acceptSellOffer(userKey, uid, it.transactionHash)
+                }
+    }
 
     override fun createOffer(offerData: OfferData): Completable {
         return BuySellOfferActivity.api.createBuyOffer(offerData)

@@ -88,6 +88,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
     companion object {
         lateinit var api: OffersApi
         lateinit var walletManager: WalletManager
+        lateinit var yabContractService: YabContractService
 
         fun intent(context: Context, retailer: Retailer, clazz: Class<out BuySellOfferActivity>) = Intent(context, clazz)
                 .putExtra(RETAILER_KEY, retailer)
