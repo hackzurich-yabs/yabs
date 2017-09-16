@@ -20,6 +20,6 @@ class ContractAddressController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     String getBalances() {
-        return configuration.yabsAddress
+        return "\"${configuration.yabsAddress}\""
     }
 }
