@@ -6,18 +6,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
 import com.elpassion.android.commons.recycler.basic.ViewHolderBinder
 import com.elpassion.android.view.hide
 import com.elpassion.android.view.show
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
-import kotlinx.android.synthetic.main.main_retailer_field.*
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
 import java.math.BigInteger
@@ -102,16 +99,4 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
     }
 
     abstract fun createOffer(offerData: OfferData): Completable
-}
-
-private fun Completable.bindLoader(progressBar: View): Completable {
-    return doOnSubscribe { progressBar.show() }
-            .doOnDispose { progressBar.hide() }
-            .doOnComplete { progressBar.hide() }
-}
-
-fun <T> Observable<T>.bindLoader(progressBar: View): Observable<T> {
-    return doOnSubscribe { progressBar.show() }
-            .doOnDispose { progressBar.hide() }
-            .doOnComplete { progressBar.hide() }
 }
