@@ -6,9 +6,11 @@ import com.yabs.hackzurich.dto.OfferData
 import com.yabs.hackzurich.dto.OffersData
 import com.yabs.hackzurich.model.BuyOffer
 import com.yabs.hackzurich.model.Offer
+import com.yabs.hackzurich.model.OfferId
 import com.yabs.hackzurich.model.SellOffer
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,7 +18,10 @@ import org.springframework.stereotype.Service
 @Slf4j
 class OffersService {
 
+    @Autowired
     private BuyOfferRepository buyOfferRepository
+
+    @Autowired
     private SellOfferRepository sellOfferRepository
 
     void createBuyOffer(OfferData offerData) { // TODO to nie dziala :(
@@ -28,6 +33,20 @@ class OffersService {
     void createSaleOffer(OfferData offerData) { // TODO jw
         SellOffer sellOffer = OfferMapper.toSellOffer(offerData)
         sellOfferRepository.save(sellOffer)
+    }
+
+    void acceptBuyOffer(String userKey, long uid, String transactionHash) {
+        BuyOffer offer = buyOfferRepository.findById(new OfferId(userKey: userKey, uid: uid)).get()
+        log.info(offer as String)
+        verifyWithBlockchain(transactionHash, offer)
+        buyOfferRepository.delete(offer)
+    }
+
+    void acceptSellOffer(String userKey, long uid, String transactionHash) {
+        SellOffer offer = sellOfferRepository.findById(new OfferId(userKey: userKey, uid: uid)).get()
+        log.info(offer as String)
+        verifyWithBlockchain(transactionHash, offer)
+        sellOfferRepository.delete(offer)
     }
 
     OffersData getOffersForRetailer(String retailerKey) {
@@ -45,4 +64,7 @@ class OffersService {
         return sellOfferRepository.findByRetailerKey(retailerKey).collect { OfferMapper.toOfferData(it as Offer) }
     }
 
+    private void verifyWithBlockchain(String transactionHash, Offer offer) {
+        // TODO implement
+    }
 }

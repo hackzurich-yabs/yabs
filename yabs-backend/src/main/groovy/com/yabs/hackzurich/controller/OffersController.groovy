@@ -40,7 +40,7 @@ class OffersController {
     void acceptBuyOffer(@RequestParam String userKey,
                         @RequestParam Long uid,
                         @RequestParam String transactionHash) {
-        // todo
+        offersService.acceptBuyOffer(userKey, uid, transactionHash)
     }
 
     @RequestMapping(value = '/acceptSellOffer', method = RequestMethod.GET)
@@ -48,7 +48,7 @@ class OffersController {
     void acceptSellOffer(@RequestParam String userKey,
                         @RequestParam Long uid,
                         @RequestParam String transactionHash) {
-        // todo
+        offersService.acceptSellOffer(userKey, uid, transactionHash)
     }
 
     @RequestMapping(value = '/getOffers', method = RequestMethod.GET, produces = 'application/json')
