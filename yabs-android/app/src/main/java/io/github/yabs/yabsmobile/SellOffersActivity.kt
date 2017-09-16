@@ -6,6 +6,7 @@ import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
+import java.util.*
 
 class SellOffersActivity : BuySellOfferActivity() {
 
@@ -23,7 +24,10 @@ class SellOffersActivity : BuySellOfferActivity() {
     }
 
     override fun createOffer(offerData: OfferData): Completable {
-        return BuySellOfferActivity.api.createSellOffer(offerData)
+        val randomGen = Random()
+        val uid = Math.abs(randomGen.nextLong())
+        return yabContractService.executeRx { createSellOffer(Uint256(uid), Address(retailer.publicKey), Uint256(offerData.points), Uint256(offerData.yabsPoints)) }
+                .flatMapCompletable { api.createSellOffer(offerData.copy(uid = uid)) }
     }
 
     companion object {
