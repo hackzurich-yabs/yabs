@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
+import io.github.yabs.yabsmobile.solidity.YabsContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.web3j.abi.datatypes.Address
 
 class MainActivity : AppCompatActivity() {
 
