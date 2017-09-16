@@ -14,6 +14,9 @@ class YabsApplication : MultiDexApplication() {
         val walletManager = WalletManager(applicationContext)
         MainActivity.walletManager = walletManager
         RetailerDetails.walletManager = walletManager
+        RetailerDetails.contractApi = ContractAdressApi.INSTANCE
+        RetailerDetails.claimPointsApi = ClaimPointsApi.INSTANCE
+        RetailerDetails.claimPromoApi = ClaimPromoCodeApi.INSTANCE
     }
 }
 
