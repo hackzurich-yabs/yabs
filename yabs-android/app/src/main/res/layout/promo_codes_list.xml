@@ -15,13 +15,18 @@
         <LinearLayout
             android:id="@+id/promoCodeBackgroundView"
             android:layout_width="match_parent"
+            android:paddingTop="4dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
                 <TextView
                     android:id="@+id/claimPromoCodeButton"
@@ -36,6 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:text="You need"
                     android:textSize="16sp" />
             </FrameLayout>
