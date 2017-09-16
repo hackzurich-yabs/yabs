@@ -28,7 +28,7 @@ class RetailerDetails : AppCompatActivity() {
         setContentView(R.layout.retailer_details)
         setSupportActionBar(toolbar_top)
         retailerCoinsTextView.text = retailer.balance
-        setRetailerLayout(retailer.name)
+        customizeForRetailer(retailer.name, retailerDetailsGradientLayout)
         scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)
             integrator.initiateScan()
@@ -54,20 +54,6 @@ class RetailerDetails : AppCompatActivity() {
                 }, {
                     Log.e("kasper", "msg $it")
                 }))
-    }
-
-    fun setRetailerLayout(name: String) {
-        when (name) {
-            "Coop" -> customizeRetailerLayout(R.drawable.coop, R.drawable.coop_gradient)
-            "Fashwell" -> customizeRetailerLayout(R.drawable.fashwell, R.drawable.fashwell_gradient)
-            "Siroop" -> customizeRetailerLayout(R.drawable.siroop, R.drawable.siroop_gradient)
-            "Zalando" -> customizeRetailerLayout(R.drawable.zalando, R.drawable.zalando_gradient)
-        }
-    }
-
-    fun customizeRetailerLayout(image: Int, gradient: Int) {
-        retailerImageView.setImageResource(image)
-        retailerDetailsGradientLayout.setBackgroundResource(gradient)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
