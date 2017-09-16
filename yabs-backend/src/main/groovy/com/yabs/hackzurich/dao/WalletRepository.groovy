@@ -7,10 +7,11 @@ import java.nio.file.Files
 
 class WalletRepository {
 
-    private static String password = "password"
-    private static File directory = Files.createTempDirectory("wallets").toFile()
-    private static String readOnlyCredentials = WalletUtils.generateLightNewWalletFile(password, directory)
-
+    private static final String password = "password"
+    private static final File directory = Files.createTempDirectory("wallets").toFile()
+    private static final String readOnlyFileName = WalletUtils.generateLightNewWalletFile(password, directory)
+    static final Credentials readOnlyCredentials =
+            WalletUtils.loadCredentials(password, new File(directory, readOnlyFileName))
 
     static String crateNewWalletFile() {
         return WalletUtils.generateLightNewWalletFile(password, directory)
@@ -20,7 +21,5 @@ class WalletRepository {
         return WalletUtils.loadCredentials(password, new File(directory, walletFile))
     }
 
-    static Credentials readOnlyCredentials() {
-        return WalletUtils.loadCredentials(password, new File(directory, readOnlyCredentials))
-    }
+
 }
