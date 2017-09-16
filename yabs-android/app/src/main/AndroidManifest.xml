@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,10 +22,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".RetailerDetails" />
-        <activity android:name=".YouAreBuyingActivity" />
-        <activity android:name=".YouAreSellingActivity" />
-        <activity android:name=".PromoCodeActivity" />
+        <activity
+            android:name=".RetailerDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".YouAreBuyingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".YouAreSellingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PromoCodeActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
