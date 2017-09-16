@@ -19,6 +19,7 @@ class YabsTest {
     private Credentials credentials = WalletUtils.loadCredentials("rinkeby", credentialsFile)
     private Web3j web3j = new JsonRpc2_0Web3j(new InfuraHttpService("https://rinkeby.infura.io/0ZevQ4HkUCzCVBOsYZcQ"))
 
+    @Ignore
     @Test
     void shouldDeploy() throws Exception {
         String contractAddress = YabsContract.deploy(web3j, credentials, GAS_PRICE, Contract.GAS_LIMIT, BigInteger.ZERO)
@@ -27,5 +28,11 @@ class YabsTest {
         File configuration = new File("src/main/resources/solidityConfiguration.properties")
         configuration.write("yabsAddress=$contractAddress")
         println(contractAddress)
+    }
+
+    @Ignore
+    @Test
+    void createNewRetailer() throws Exception {
+        WalletUtils.generateFullNewWalletFile("password", new File("src/main/resources/retailers"))
     }
 }
