@@ -33,7 +33,8 @@ class RetailerDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
         retailerName.text = retailer.name
-        addReceiptButton.setOnClickListener {
+        retailerCoinsTextView.text = retailer.balance
+        scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)
             integrator.initiateScan()
         }
