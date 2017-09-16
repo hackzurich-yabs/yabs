@@ -1,17 +1,23 @@
 package com.yabs.hackzurich.solidity
 
+import com.yabs.hackzurich.exception.TransactionVerificationException
 import com.yabs.hackzurich.service.WalletService
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.JsonRpc2_0Web3j
+import org.web3j.protocol.core.Request
+import org.web3j.protocol.core.methods.response.EthTransaction
+import org.web3j.protocol.core.methods.response.Transaction
 import org.web3j.protocol.infura.InfuraHttpService
 import org.web3j.utils.Convert
 
 @Service
 @CompileStatic
+@Slf4j
 class SolidityService {
 
     private static final Web3j web3j = new JsonRpc2_0Web3j(new InfuraHttpService("https://rinkeby.infura.io/0ZevQ4HkUCzCVBOsYZcQ"))
@@ -37,5 +43,23 @@ class SolidityService {
             credentials,
             Convert.toWei("21", Convert.Unit.GWEI).toBigInteger(), BigInteger.valueOf(338742L)
         )
+    }
+
+    void checkTransactionOnBlockchain(String userKey, String retailerKey, String transactionHash, BigInteger points) {
+        Request<?, EthTransaction> request = web3j.ethGetTransactionByHash(transactionHash)
+        EthTransaction transactionResponse = request.send()
+        Transaction transaction = transactionResponse.transaction.get()
+        if (transaction.from != userKey) {
+            log.info("Different user public key: ${transaction.from}, ${userKey}")
+            throw new TransactionVerificationException()
+        }
+        if (transaction.to != retailerKey) {
+            log.info("Different retailer public key: ${transaction.to}, ${retailerKey}")
+            throw new TransactionVerificationException()
+        }
+        if (transaction.value != points) {
+            log.info("Different transaction value: ${transaction.value}, ${points}")
+            throw new TransactionVerificationException()
+        }
     }
 }
