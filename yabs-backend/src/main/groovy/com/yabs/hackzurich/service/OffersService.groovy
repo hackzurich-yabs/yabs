@@ -58,13 +58,13 @@ class OffersService {
     private List<OfferData> getBuyOffersForRetailer(String retailerKey) {
         return buyOfferRepository.findByRetailerKey(retailerKey)
             .collect { OfferMapper.toOfferData(it as Offer) }
-            .sort { a, b -> b.points / b.yabsPoints <=> a.points / a.yabsPoints }
+            .sort { a, b -> a.points / a.yabsPoints <=> b.points / b.yabsPoints }
     }
 
     private List<OfferData> getSellOffersForRetailer(String retailerKey) {
         return sellOfferRepository.findByRetailerKey(retailerKey)
             .collect { OfferMapper.toOfferData(it as Offer) }
-            .sort { a, b -> a.points / a.yabsPoints <=> b.points / b.yabsPoints }
+            .sort { a, b -> b.points / b.yabsPoints <=> a.points / a.yabsPoints }
     }
 
     private void verifyWithBlockchain(String transactionHash, Offer offer) {
