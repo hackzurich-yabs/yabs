@@ -8,14 +8,13 @@ import com.yabs.hackzurich.model.BuyOffer
 import com.yabs.hackzurich.model.Offer
 import com.yabs.hackzurich.model.OfferId
 import com.yabs.hackzurich.model.SellOffer
+import com.yabs.hackzurich.solidity.SolidityService
 import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 @CompileStatic
-@Slf4j
 class OffersService {
 
     @Autowired
@@ -24,9 +23,11 @@ class OffersService {
     @Autowired
     private SellOfferRepository sellOfferRepository
 
+    @Autowired
+    private SolidityService solidityService
+
     void createBuyOffer(OfferData offerData) {
         BuyOffer buyOffer = OfferMapper.toBuyOffer(offerData)
-        log.info(buyOffer as String)
         buyOfferRepository.save(buyOffer)
     }
 
@@ -37,14 +38,12 @@ class OffersService {
 
     void acceptBuyOffer(String userKey, long uid, String transactionHash) {
         BuyOffer offer = buyOfferRepository.findById(new OfferId(userKey: userKey, uid: uid)).get()
-        log.info(offer as String)
         verifyWithBlockchain(transactionHash, offer)
         buyOfferRepository.delete(offer)
     }
 
     void acceptSellOffer(String userKey, long uid, String transactionHash) {
         SellOffer offer = sellOfferRepository.findById(new OfferId(userKey: userKey, uid: uid)).get()
-        log.info(offer as String)
         verifyWithBlockchain(transactionHash, offer)
         sellOfferRepository.delete(offer)
     }
@@ -65,6 +64,6 @@ class OffersService {
     }
 
     private void verifyWithBlockchain(String transactionHash, Offer offer) {
-        // TODO implement
+        solidityService.checkTransactionOnBlockchain(offer.offerId.userKey, offer.retailerKey, transactionHash, offer.points)
     }
 }
