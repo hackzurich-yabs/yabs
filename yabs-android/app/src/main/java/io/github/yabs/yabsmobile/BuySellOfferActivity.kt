@@ -41,7 +41,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         setContentView(R.layout.offers_list)
         setSupportActionBar(toolbar_top)
         customizeForRetailer(retailer.name, retailerBackgroundView)
-        retailerCoinsTextView.text = retailer.balance
+        retailerCoinsTextView.text = retailer.balance.toString()
         offersList.layoutManager = LinearLayoutManager(this)
         getOffers()
         addOfferButton.setOnClickListener {

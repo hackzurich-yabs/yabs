@@ -27,7 +27,7 @@ class RetailerDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
         setSupportActionBar(toolbar_top)
-        retailerCoinsTextView.text = retailer.balance
+        retailerCoinsTextView.text = retailer.balance.toString()
         customizeForRetailer(retailer.name, retailerDetailsGradientLayout)
         scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)

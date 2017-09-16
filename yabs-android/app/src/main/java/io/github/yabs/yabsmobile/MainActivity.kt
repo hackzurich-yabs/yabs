@@ -5,16 +5,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
-import io.github.yabs.yabsmobile.solidity.YabsContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.progress.*
-import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.web3j.abi.datatypes.Address
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe({
                     retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.main_retailer_field) { holder, item ->
                         holder.itemView.retailerImageView.setImageResource(setImageResource(item.name))
-                        holder.itemView.pointsCountTextView.text = item.balance
+                        holder.itemView.pointsCountTextView.text = item.balance.toString()
                         holder.itemView.setOnClickListener { _ ->
                             RetailerDetails.start(this, item)
                         }
@@ -51,8 +48,8 @@ class MainActivity : AppCompatActivity() {
                 })
     }
 
-    fun setImageResource(name: String) : Int {
-        when(name) {
+    fun setImageResource(name: String): Int {
+        when (name) {
             "Coop" -> return R.drawable.coop
             "Swiss" -> return R.drawable.swiss
             "Siroop" -> return R.drawable.siroop
@@ -61,8 +58,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setGradientResource(name: String) : Int {
-        when(name) {
+    fun setGradientResource(name: String): Int {
+        when (name) {
             "Coop" -> return R.drawable.coop_item_gradient
             "Swiss" -> return R.drawable.swiss_item_gradient
             "Siroop" -> return R.drawable.siroop_item_gradient
@@ -70,8 +67,6 @@ class MainActivity : AppCompatActivity() {
             else -> throw RuntimeException()
         }
     }
-
-    private fun YabsContract.getYabs() = getBalance(Address(wallet.address), Address("0x0"))
 
     override fun onDestroy() {
         disposable?.dispose()

@@ -14,12 +14,10 @@ import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.promo_code_field.view.*
 import kotlinx.android.synthetic.main.promo_codes_list.*
-import kotlinx.android.synthetic.main.retailer_details.*
 import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
-import java.math.BigInteger
 
 class PromoCodeActivity : AppCompatActivity() {
 
@@ -32,11 +30,11 @@ class PromoCodeActivity : AppCompatActivity() {
         setContentView(R.layout.promo_codes_list)
         setSupportActionBar(toolbar_top)
         customizeForRetailer(retailer.name, promoCodeBackgroundView)
-        retailerCoinsTextView.text = retailer.balance
+        retailerCoinsTextView.text = retailer.balance.toString()
         yourPromoCodes.text = "Your ${retailer.name} promo codes"
         promoCodeListView.layoutManager = LinearLayoutManager(this)
         claimPromoCodeButton.setOnClickListener {
-            val points = Uint256(200)
+            val points = Uint256(retailer.promoCodePrice)
             disposable = yabContractService
                     .executeRx { claimPromoCode(Address(retailer.publicKey), points) }
                     .flatMap {
@@ -51,6 +49,11 @@ class PromoCodeActivity : AppCompatActivity() {
                         Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
                         Log.e("kasper", "$it")
                     })
+        }
+        if (retailer.balance >= retailer.promoCodePrice) {
+            claimPromoCodeButton.show()
+        } else {
+            claimPromoCodeButton.hide()
         }
     }
 
