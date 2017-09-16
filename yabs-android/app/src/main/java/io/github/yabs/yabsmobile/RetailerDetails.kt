@@ -12,6 +12,7 @@ import io.github.yabs.yabsmobile.scanner.IntentResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailer_details.*
 import java.math.BigInteger
 import kotlinx.android.synthetic.main.retailers_detail_top.*

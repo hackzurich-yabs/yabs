@@ -11,6 +11,7 @@ import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAnd
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.promo_code_field.view.*
 import kotlinx.android.synthetic.main.promo_codes_list.*
 import org.web3j.abi.datatypes.Address

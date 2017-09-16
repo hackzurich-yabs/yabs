@@ -17,6 +17,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
+import kotlinx.android.synthetic.main.progress.*
 import java.math.BigInteger
 
 abstract class BuySellOfferActivity : AppCompatActivity() {
