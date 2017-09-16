@@ -61,6 +61,12 @@ class YabsTest {
 
     @Ignore
     @Test
+    void shouldGiveSomeYabsToMobile() throws Exception {
+        loadContract(credentials).transferYabs(new Address(mobileAddress), new Uint256(BigInteger.valueOf(1000L))).get()
+    }
+
+    @Ignore
+    @Test
     void shouldGiveRetailersCoinsToMobile() throws Exception {
         giveRetailersCoinsToMobile("Coop", 1000L)
         giveRetailersCoinsToMobile("Zalando", 99L)
