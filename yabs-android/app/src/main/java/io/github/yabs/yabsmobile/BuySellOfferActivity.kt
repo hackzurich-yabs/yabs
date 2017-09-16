@@ -43,13 +43,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         customizeForRetailer(retailer.name, retailerBackgroundView)
         retailerCoinsTextView.text = retailer.balance
         offersList.layoutManager = LinearLayoutManager(this)
-        disposable.add(api.map { extractOffers(it) }
-                .bindLoader(progressBar)
-                .subscribe({
-                    offersList.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.offer_field, this::bindOffer)
-                }, {
-                    Log.e("kasper", "$it")
-                }))
+        getOffers()
         addOfferButton.setOnClickListener {
             addOfferDialog.show()
         }
@@ -73,6 +67,16 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                         Log.e("kasper", "$it")
                     }))
         }
+    }
+
+    private fun getOffers() {
+        disposable.add(api.map { extractOffers(it) }
+                .bindLoader(progressBar)
+                .subscribe({
+                    offersList.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.offer_field, this::bindOffer)
+                }, {
+                    Log.e("kasper", "$it")
+                }))
     }
 
     override fun onResume() {
@@ -99,6 +103,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                     .subscribe({ a ->
                         yabsAmountText.text = "${a.value} yabs"
                         Toast.makeText(context, "Udalo sie!!", Toast.LENGTH_LONG).show()
+                        getOffers()
                     }, {
                         Log.e("kasper", "$it")
                     }))
