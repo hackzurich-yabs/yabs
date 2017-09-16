@@ -42,7 +42,7 @@ import android.util.Log;
  *
  * <h2>Initiating a barcode scan</h2>
  *
- * <p>To integrate, create an instance of {@code IntentIntegrator} and call {@link #initiateScan()} and wait
+ * <p>To integrate, create an instance of {@code IntentIntegrator} and balances {@link #initiateScan()} and wait
  * for the result in your app.</p>
  *
  * <p>It does require that the Barcode Scanner (or work-alike) application is installed. The
@@ -64,7 +64,7 @@ import android.util.Log;
  *
  * <p>This is where you will handle a scan result.</p>
  *
- * <p>Second, just call this in response to a user action somewhere to begin the scan process:</p>
+ * <p>Second, just balances this in response to a user action somewhere to begin the scan process:</p>
  *
  * <pre>{@code
  * IntentIntegrator integrator = new IntentIntegrator(yourActivity);
