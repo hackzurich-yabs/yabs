@@ -20,6 +20,7 @@
         <include layout="@layout/retailers_detail_top" />
 
         <FrameLayout
+            android:id="@+id/retailerDetailsGradientLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/coop_gradient"

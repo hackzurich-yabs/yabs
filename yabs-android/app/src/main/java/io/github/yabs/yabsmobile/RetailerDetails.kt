@@ -26,7 +26,7 @@ class RetailerDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
-        setRetailerName(retailer.name)
+        setRetailerLayout(retailer.name)
         retailerCoinsTextView.text = retailer.balance
         yabsAmountText.text = "You have $yabsAmount yabs"
         scanReceiptButton.setOnClickListener {
@@ -44,13 +44,18 @@ class RetailerDetails : AppCompatActivity() {
         }
     }
 
-    fun setRetailerName(name: String) {
+    fun setRetailerLayout(name: String) {
         when (name) {
-            "Coop" -> retailerImageView.setImageResource(R.drawable.coop)
-            "Fashwell" -> retailerImageView.setImageResource(R.drawable.fashwell)
-            "Siroop" -> retailerImageView.setImageResource(R.drawable.siroop)
-            "Zalando" -> retailerImageView.setImageResource(R.drawable.zalando)
+            "Coop" -> customizeRetailerLayout(R.drawable.coop, R.drawable.coop_gradient)
+            "Fashwell" -> customizeRetailerLayout(R.drawable.fashwell, R.drawable.fashwell_gradient)
+            "Siroop" -> customizeRetailerLayout(R.drawable.siroop, R.drawable.siroop_gradient)
+            "Zalando" -> customizeRetailerLayout(R.drawable.zalando, R.drawable.zalando_gradient)
         }
+    }
+
+    fun customizeRetailerLayout(image: Int, gradient: Int) {
+        retailerImageView.setImageResource(image)
+        retailerDetailsGradientLayout.setBackgroundResource(gradient)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
