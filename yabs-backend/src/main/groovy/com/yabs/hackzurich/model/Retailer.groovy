@@ -16,7 +16,7 @@ class Retailer {
     String publicKey
 
     @Column(nullable = false)
-    String privateKey
+    String walletFileName
 
     @Column(nullable = false)
     String name

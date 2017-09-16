@@ -1,6 +1,6 @@
 package com.yabs.hackzurich.solidity
 
-import com.yabs.hackzurich.dao.WalletRepository
+import com.yabs.hackzurich.service.WalletService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -17,7 +17,7 @@ class SolidityService {
     private static final Web3j web3j = new JsonRpc2_0Web3j(new InfuraHttpService("https://rinkeby.infura.io/0ZevQ4HkUCzCVBOsYZcQ"))
 
     @Autowired
-    private WalletRepository walletRepository
+    private WalletService walletRepository
 
     @Autowired
     private SolidityConfiguration solidityConfiguration
