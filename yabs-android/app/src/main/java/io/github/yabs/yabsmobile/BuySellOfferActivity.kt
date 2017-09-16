@@ -49,7 +49,14 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         dialogPositiveButton.setOnClickListener {
             val points = BigInteger(pointsCountTextView.text.toString())
             val yabs = BigInteger(offerYabsPointsAmount.text.toString())
-            createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailersKey = retailer.publicKey))
+            disposable = createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailersKey = retailer.publicKey))
+                    .subscribeOn(IoScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        Toast.makeText(this, "Udalo sie!!", Toast.LENGTH_LONG).show()
+                    }, {
+                        Log.e("kasper", "$it")
+                    })
         }
     }
 
