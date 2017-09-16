@@ -16,12 +16,11 @@ class SolidityService {
 
     private static final Web3j web3j = new JsonRpc2_0Web3j(new InfuraHttpService("https://rinkeby.infura.io/0ZevQ4HkUCzCVBOsYZcQ"))
 
-    private final WalletRepository walletRepository
+    @Autowired
+    private WalletRepository walletRepository
 
     @Autowired
-    SolidityService(WalletRepository walletRepository) {
-        this.walletRepository = walletRepository
-    }
+    private SolidityConfiguration solidityConfiguration
 
     YabsContract getYabsContract() {
         return getYabsContract(walletRepository.readOnlyCredentials)
@@ -32,9 +31,11 @@ class SolidityService {
     }
 
     YabsContract getYabsContract(Credentials credentials) {
-        return YabsContract.load(SolidityUtils.yabsAddress,
-                web3j,
-                credentials,
-                Convert.toWei("21", Convert.Unit.GWEI).toBigInteger(), BigInteger.valueOf(338742L))
+        return YabsContract.load(
+            solidityConfiguration.yabsAddress,
+            web3j,
+            credentials,
+            Convert.toWei("21", Convert.Unit.GWEI).toBigInteger(), BigInteger.valueOf(338742L)
+        )
     }
 }
