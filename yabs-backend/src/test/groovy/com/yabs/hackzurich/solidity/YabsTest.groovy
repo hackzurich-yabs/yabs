@@ -9,6 +9,8 @@ import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.JsonRpc2_0Web3j
 import org.web3j.protocol.infura.InfuraHttpService
 import org.web3j.tx.Contract
+import org.web3j.tx.Transfer
+import org.web3j.utils.Convert
 
 import static org.web3j.tx.ManagedTransaction.GAS_PRICE
 
@@ -34,5 +36,25 @@ class YabsTest {
     @Test
     void createNewRetailer() throws Exception {
         WalletUtils.generateFullNewWalletFile("password", new File("src/main/resources/retailers"))
+    }
+
+    @Ignore
+    @Test
+    void giveEtherToRetailers() throws Exception {
+        giveOneEtherToAddress(addersOfRetailer("Coop"))
+        giveOneEtherToAddress(addersOfRetailer("Fashwell"))
+        giveOneEtherToAddress(addersOfRetailer("Siroop"))
+        giveOneEtherToAddress(addersOfRetailer("Zalando"))
+    }
+
+    private void giveOneEtherToAddress(String address) {
+        Transfer.sendFunds(web3j, credentials, address, BigDecimal.ONE, Convert.Unit.ETHER)
+    }
+
+    private String addersOfRetailer(String retailerName) {
+        String name = retailerName
+        def file = new File("src/main/resources/retailers/${name}.json")
+        def credentials = WalletUtils.loadCredentials("password", file)
+        return credentials.address
     }
 }
