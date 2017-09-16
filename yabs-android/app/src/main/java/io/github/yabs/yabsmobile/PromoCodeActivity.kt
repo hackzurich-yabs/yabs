@@ -14,6 +14,7 @@ import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.promo_code_field.view.*
 import kotlinx.android.synthetic.main.promo_codes_list.*
+import kotlinx.android.synthetic.main.toolbar.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
@@ -28,9 +29,10 @@ class PromoCodeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.promo_codes_list)
+        setSupportActionBar(toolbar_top)
         retailerCoinsTextView.text = retailer.balance
         promoCodeListView.layoutManager = LinearLayoutManager(this)
-        yabsAmountText.text = "You have $yabsAmount yabs"
+        yabsAmountText.text = "$yabsAmount yabs"
         claimPromoCodeButton.setOnClickListener {
             val points = Uint256(200)
             disposable = yabContractService

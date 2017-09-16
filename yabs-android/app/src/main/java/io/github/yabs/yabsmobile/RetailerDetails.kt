@@ -14,8 +14,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailer_details.*
-import java.math.BigInteger
 import kotlinx.android.synthetic.main.retailers_detail_top.*
+import kotlinx.android.synthetic.main.toolbar.*
+import java.math.BigInteger
 
 
 class RetailerDetails : AppCompatActivity() {
@@ -27,9 +28,10 @@ class RetailerDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
+        setSupportActionBar(toolbar_top)
         setRetailerName(retailer.name)
         retailerCoinsTextView.text = retailer.balance
-        yabsAmountText.text = "You have $yabsAmount yabs"
+        yabsAmountText.text = "$yabsAmount yabs"
         scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)
             integrator.initiateScan()
