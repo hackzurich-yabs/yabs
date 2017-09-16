@@ -2,6 +2,7 @@ package io.github.yabs.yabsmobile
 
 import android.content.Context
 import android.os.Bundle
+import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
 
 class SellOffersActivity : BuySellOfferActivity() {
@@ -14,7 +15,11 @@ class SellOffersActivity : BuySellOfferActivity() {
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.sellOffers
 
-    override fun fulFillOffer(offerData: OfferData) = BuySellOfferActivity.api.createSellOffer(offerData)
+    override fun fulFillOffer(uid: Long, userKey: String) = BuySellOfferActivity.api.acceptBuyOffer(userKey, uid, "txnHash")
+
+    override fun createOffer(offerData: OfferData): Completable {
+        return BuySellOfferActivity.api.createSellOffer(offerData)
+    }
 
     companion object {
         fun start(context: Context, retailer: Retailer) {

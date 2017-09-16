@@ -18,6 +18,16 @@ interface OffersApi {
     @POST("createBuyOffer")
     fun createBuyOffer(@Body offer: OfferData) : Completable
 
+
+    @GET("acceptBuyOffer")
+    fun acceptBuyOffer(@Query("userKey") userKey: String,
+                       @Query("uid") uid: Long,
+                       @Query("transactionHash") transactionHash: String) : Completable
+
+    @GET("acceptSellOffer")
+    fun acceptSellOffer(@Query("userKey") userKey: String,
+                       @Query("uid") uid: Long,
+                       @Query("transactionHash") transactionHash: String) : Completable
     companion object {
         val INSTANCE by lazy { retrofit.create(OffersApi::class.java) }
     }

@@ -15,8 +15,10 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.android.synthetic.main.main_retailer_field.*
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
+import java.math.BigInteger
 
 abstract class BuySellOfferActivity : AppCompatActivity() {
 
@@ -44,6 +46,11 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         dialogNegativeButton.setOnClickListener {
             addOfferDialog.hide()
         }
+        dialogPositiveButton.setOnClickListener {
+            val points = BigInteger(pointsCountTextView.text.toString())
+            val yabs = BigInteger(offerYabsPointsAmount.text.toString())
+            createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailersKey = retailer.publicKey))
+        }
     }
 
     private fun bindOffer(holder: ViewHolderBinder<OfferData>, offer: OfferData) = with(holder.itemView) {
@@ -51,7 +58,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
         setOnClickListener {
-            disposable = fulFillOffer(offerData = OfferData(walletManager.getWallet().address, offer.uid, retailer.publicKey, offer.points, offer.yabsPoints))
+            disposable = fulFillOffer(offer.uid, walletManager.getWallet().address)
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -62,7 +69,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         }
     }
 
-    abstract fun fulFillOffer(offerData: OfferData): Completable
+    abstract fun fulFillOffer(uid: Long, userKey: String): Completable
 
     abstract fun extractOffers(buySellOffers: BuySellOffers): List<OfferData>
 
@@ -80,4 +87,6 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
 
         private const val RETAILER_KEY = "retailer"
     }
+
+    abstract fun createOffer(offerData: OfferData): Completable
 }
