@@ -3,7 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
     <color name="backgroundColor">#F1F1F1</color>
     <color name="textColor">#5F5F5F</color>
     <color name="addButtonColor">#28b446</color>
+
+    <color name="coop">#FF8605</color>
+    <color name="fashwell">#58595B</color>
+    <color name="siroop">#45D4E1</color>
+    <color name="zalandoColor">#FF6900</color>
 </resources>
