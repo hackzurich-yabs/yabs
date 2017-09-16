@@ -46,13 +46,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }, {
-                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(listOf(Retailer(name = "biedron", balance = "15", publicKey = "123")), R.layout.retailer_item) { holder, item ->
-                        holder.itemView.retailerName.text = item.name
-                        holder.itemView.retailerCoinsCount.text = item.balance
-                        holder.itemView.setOnClickListener {
-                            RetailerDetails.start(this, item)
-                        }
-                    }
                     Log.e("kasper", "$it")
                 })
 //            val integrator = IntentIntegrator(this)
