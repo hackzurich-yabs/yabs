@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.retailer_details.*
 import java.math.BigInteger
+import kotlinx.android.synthetic.main.retailers_detail_top.*
 
 
 class RetailerDetails : AppCompatActivity() {
