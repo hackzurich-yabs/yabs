@@ -17,6 +17,6 @@ class PointsService {
 
     void claim(String userKey, String retailerKey, String receiptId) {
         YabsContract contract = solidityService.getYabsContract(retailerKey)
-        contract.addPoints(new Address(userKey), new Uint256(BigInteger.valueOf(Long.parseLong(receiptId))))
+        contract.addPoints(new Address(userKey), new Uint256(BigInteger.valueOf(300L)))
     }
 }
