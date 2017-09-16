@@ -1,11 +1,13 @@
 package io.github.yabs.yabsmobile
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
 import com.elpassion.android.commons.recycler.basic.ViewHolderBinder
@@ -59,6 +61,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
+                        hideKeyboard()
                         addOfferDialog.hide()
                     }
                     .bindLoader(progressBar)
@@ -68,6 +71,11 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                         Log.e("kasper", "$it")
                     })
         }
+    }
+
+    private fun Activity.hideKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
     }
 
     private fun bindOffer(holder: ViewHolderBinder<OfferData>, offer: OfferData) = with(holder.itemView) {
