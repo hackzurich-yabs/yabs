@@ -10,31 +10,22 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.retailer_item.view.*
-import org.web3j.crypto.WalletUtils
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    private var walletFileName by sharedPrefsProvider<String>().asProperty("walletFile")
     private val retailersApi by lazy { BalancesApi.INSTANCE }
     private var disposable: Disposable? = null
+    private val wallet by lazy { walletManager.getWallet() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val credentialsVault = File(filesDir, "credentials")
-        if (!credentialsVault.exists()) {
-            credentialsVault.mkdir()
-        }
-        if (walletFileName == null) {
-            val fullNewWalletFile = WalletUtils.generateLightNewWalletFile("password", credentialsVault)
-            walletFileName = fullNewWalletFile
-            Log.e("kasper", "wallet created $fullNewWalletFile")
-        }
-        val wallet = WalletUtils.loadCredentials("password", File(credentialsVault, walletFileName))
-
         retailerListView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposable?.dispose()
         disposable = retailersApi.balances(wallet.ecKeyPair.publicKey.toString())
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -54,5 +45,9 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         disposable?.dispose()
         super.onDestroy()
+    }
+
+    companion object {
+        lateinit var walletManager: WalletManager
     }
 }

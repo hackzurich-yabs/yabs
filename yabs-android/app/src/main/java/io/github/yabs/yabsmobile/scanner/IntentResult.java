@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.yabs.yabsmobile;
+package io.github.yabs.yabsmobile.scanner;
 
 /**
  * <p>Encapsulates the result of a barcode scan invoked through {@link IntentIntegrator}.</p>
