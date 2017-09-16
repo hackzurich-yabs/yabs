@@ -10,33 +10,27 @@ import android.widget.Toast
 import io.github.yabs.yabsmobile.scanner.IntentIntegrator
 import io.github.yabs.yabsmobile.scanner.IntentResult
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailer_details.*
 import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.math.BigInteger
 
 
 class RetailerDetails : AppCompatActivity() {
 
     private val retailer by lazy { intent.getSerializableExtra(RETAILER_KEY) as Retailer }
-    private val yabsAmount by lazy { intent.getSerializableExtra(YABS_KEY) as BigInteger }
-    private var disposable: Disposable? = null
+    private var disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
         retailerCoinsTextView.text = retailer.balance
         setRetailerLayout(retailer.name)
-        yabsAmountText.text = "$yabsAmount yabs"
         scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)
             integrator.initiateScan()
-        }
-        claimPromoButton.setOnClickListener {
-            PromoCodeActivity.start(this, retailer, yabsAmount)
         }
         sellPointsButton.setOnClickListener {
             YouAreSellingActivity.start(this, retailer)
@@ -44,6 +38,21 @@ class RetailerDetails : AppCompatActivity() {
         buyPointsButton.setOnClickListener {
             YouAreBuyingActivity.start(this, retailer)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposable.add(yabContractService.executeRx { getYabs(BuySellOfferActivity.walletManager.getWallet()) }
+                .subscribeOn(IoScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    yabsAmountText.text = "${it.value} yabs"
+                    claimPromoButton.setOnClickListener { _ ->
+                        PromoCodeActivity.start(this, retailer, it.value)
+                    }
+                }, {
+                    Log.e("kasper", "msg $it")
+                }))
     }
 
     fun setRetailerLayout(name: String) {
@@ -66,7 +75,7 @@ class RetailerDetails : AppCompatActivity() {
             if (scanResult != null) {
                 // handle scan result
                 Log.e("kasper", "toString() returns: " + scanResult.toString())
-                disposable = Companion.claimPointsApi.claim(walletManager.getWallet().address, retailer.publicKey, scanResult.contents)
+                disposable.add(Companion.claimPointsApi.claim(walletManager.getWallet().address, retailer.publicKey, scanResult.contents)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(IoScheduler())
                         .bindLoader(progressBar)
@@ -74,7 +83,7 @@ class RetailerDetails : AppCompatActivity() {
                             Toast.makeText(this, "Wyslano", Toast.LENGTH_LONG).show()
                         }, {
                             Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
-                        })
+                        }))
             } else {
                 // else continue with any other code you need in the method
                 Log.e("kasper", "scanResult is null.")
@@ -85,20 +94,19 @@ class RetailerDetails : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        disposable?.dispose()
+        disposable.clear()
         super.onDestroy()
     }
 
     companion object {
-        fun start(context: Context, retailer: Retailer, yabsAmount: BigInteger) {
+        fun start(context: Context, retailer: Retailer) {
             context.startActivity(Intent(context, RetailerDetails::class.java)
-                    .putExtra(RETAILER_KEY, retailer)
-                    .putExtra(YABS_KEY, yabsAmount))
+                    .putExtra(RETAILER_KEY, retailer))
         }
 
         private const val RETAILER_KEY = "retailer"
-        private const val YABS_KEY = "amount"
         lateinit var walletManager: WalletManager
+        lateinit var yabContractService: YabContractService
         lateinit var claimPointsApi: ClaimPointsApi
     }
 }

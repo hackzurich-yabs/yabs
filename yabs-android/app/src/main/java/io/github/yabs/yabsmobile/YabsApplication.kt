@@ -26,6 +26,7 @@ class YabsApplication : MultiDexApplication() {
         BuySellOfferActivity.api = OffersApi.INSTANCE
         BuySellOfferActivity.yabContractService = yabContractService
         BuySellOfferActivity.walletManager = walletManager
+        RetailerDetails.yabContractService = yabContractService
     }
 }
 

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                         holder.itemView.retailerNameTextView.text = item.name
                         holder.itemView.pointsCountTextView.text = item.balance
                         holder.itemView.setOnClickListener { _ ->
-                            RetailerDetails.start(this, item, it.second.value)
+                            RetailerDetails.start(this, item)
                         }
                     }
                 }, {
