@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Claim promoCode" />
+                android:text="Promo codes" />
 
             <Button
                 android:id="@+id/buyPointsButton"
