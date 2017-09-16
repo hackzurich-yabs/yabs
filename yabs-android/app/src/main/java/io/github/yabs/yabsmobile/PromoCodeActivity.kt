@@ -44,7 +44,7 @@ class PromoCodeActivity : AppCompatActivity() {
                     .subscribeOn(IoScheduler())
                     .bindLoader(progressBar)
                     .subscribe({
-                        Toast.makeText(this, "PromoCode : $it", Toast.LENGTH_LONG).show()
+                        callForPromoCodes()
                     }, {
                         Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
                         Log.e("kasper", "$it")
@@ -54,6 +54,10 @@ class PromoCodeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        callForPromoCodes()
+    }
+
+    private fun callForPromoCodes() {
         disposable?.dispose()
         disposable = claimPromoApi.getPromoCodes(walletManager.getWallet().address, retailer.publicKey)
                 .subscribeOn(IoScheduler())
