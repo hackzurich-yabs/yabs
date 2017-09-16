@@ -29,6 +29,7 @@ class RetailerDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
         retailerCoinsTextView.text = retailer.balance
+        setRetailerLayout(retailer.name)
         yabsAmountText.text = "$yabsAmount yabs"
         scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)
