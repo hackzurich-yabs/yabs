@@ -15,7 +15,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
-import java.math.BigInteger
 
 abstract class BuySellOfferActivity : AppCompatActivity() {
 
@@ -44,7 +43,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
         setOnClickListener {
-            disposable = fulFillOffer(points = offer.points, yabsPoints = offer.yabsPoints, id = offer.uid)
+            disposable = fulFillOffer(offerData = OfferData(walletManager.getWallet().address, offer.uid, retailer.publicKey, offer.points, offer.yabsPoints))
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -55,7 +54,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         }
     }
 
-    abstract fun fulFillOffer(points: BigInteger, yabsPoints: BigInteger, id: Long): Completable
+    abstract fun fulFillOffer(offerData: OfferData): Completable
 
     abstract fun extractOffers(buySellOffers: BuySellOffers): List<OfferData>
 

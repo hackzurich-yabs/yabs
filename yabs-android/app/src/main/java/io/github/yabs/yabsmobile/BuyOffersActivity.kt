@@ -2,9 +2,7 @@ package io.github.yabs.yabsmobile
 
 import android.content.Context
 import android.os.Bundle
-import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
-import java.math.BigInteger
 
 class BuyOffersActivity : BuySellOfferActivity() {
 
@@ -15,9 +13,7 @@ class BuyOffersActivity : BuySellOfferActivity() {
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.buyOffers
 
-    override fun fulFillOffer(points: BigInteger, yabsPoints: BigInteger, id: Long): Completable {
-        return BuySellOfferActivity.api.createBuyOffer(OfferData(walletManager.getWallet().address, id, retailer.publicKey, points, yabsPoints))
-    }
+    override fun fulFillOffer(offerData: OfferData) = BuySellOfferActivity.api.createBuyOffer(offerData)
 
     companion object {
         fun start(context: Context, retailer: Retailer) {

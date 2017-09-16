@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
-import java.math.BigInteger
 
 class SellOffersActivity : BuySellOfferActivity() {
 
@@ -15,9 +14,7 @@ class SellOffersActivity : BuySellOfferActivity() {
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.sellOffers
 
-    override fun fulFillOffer(points: BigInteger, yabsPoints: BigInteger, id: Long): Completable {
-        return BuySellOfferActivity.api.createSellOffer(OfferData(walletManager.getWallet().address, id, retailer.publicKey, points, yabsPoints))
-    }
+    override fun fulFillOffer(offerData: OfferData) = BuySellOfferActivity.api.createSellOffer(offerData)
 
     companion object {
         fun start(context: Context, retailer: Retailer) {
