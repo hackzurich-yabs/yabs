@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
+import com.elpassion.android.view.hide
+import com.elpassion.android.view.show
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
@@ -35,7 +37,8 @@ class PromoCodeActivity : AppCompatActivity() {
         yourPromoCodes.text = "Your ${retailer.name} promo codes"
         promoCodeListView.layoutManager = LinearLayoutManager(this)
         if (retailer.balance >= retailer.promoCodePrice) {
-            claimPromoCodeButton.text = "Claim promocode!"
+            claimPromoCodeButton.show()
+            claimPromoCodeInsufficient.hide()
             claimPromoCodeButton.setOnClickListener {
                 val points = Uint256(retailer.promoCodePrice)
                 disposable = yabContractService
@@ -55,8 +58,9 @@ class PromoCodeActivity : AppCompatActivity() {
                         })
             }
         } else {
-            claimPromoCodeButton.text = "Insufficient funds"
-            claimPromoCodeButton.setOnClickListener { }
+            claimPromoCodeButton.hide()
+            claimPromoCodeInsufficient.show()
+            claimPromoCodeInsufficient.text = "You need ${retailer.promoCodePrice - retailer.balance} points more"
         }
     }
 
