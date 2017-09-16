@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.yabs.yabsmobile;
+package io.github.yabs.yabsmobile.scanner;
 
 import java.util.Arrays;
 import java.util.Collection;

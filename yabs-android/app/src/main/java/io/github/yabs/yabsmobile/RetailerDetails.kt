@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import io.github.yabs.yabsmobile.scanner.IntentIntegrator
+import io.github.yabs.yabsmobile.scanner.IntentResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
