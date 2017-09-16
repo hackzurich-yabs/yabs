@@ -9,7 +9,7 @@ import org.web3j.utils.Convert;
 
 class SolidityUtils {
 
-    private static final String yabsAddress = "0x358552e3c1a6e1071426d841b4ed301a56f30612"
+    private static final String yabsAddress = "0x346957abbf6cfb60459aae99ee7aefd188d91b55"
 
     private static final File credentialsFile = new File(ClassLoader.getSystemClassLoader().getResource("rinkeby.json").file)
     private static final Credentials credentials = WalletUtils.loadCredentials("rinkeby", credentialsFile)
