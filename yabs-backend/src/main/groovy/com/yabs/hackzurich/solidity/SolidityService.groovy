@@ -48,18 +48,15 @@ class SolidityService {
     void checkTransactionOnBlockchain(String userKey, String retailerKey, String transactionHash, BigInteger points) {
         Request<?, EthTransaction> request = web3j.ethGetTransactionByHash(transactionHash)
         EthTransaction transactionResponse = request.send()
+        if (!transactionResponse.transaction.isPresent()) {
+            log.info("Transaction with hash ${transactionHash} not found")
+            throw new TransactionVerificationException()
+        }
         Transaction transaction = transactionResponse.transaction.get()
-        if (transaction.from != userKey) {
-            log.info("Different user public key: ${transaction.from}, ${userKey}")
+        if (transaction.to != solidityConfiguration.yabsAddress) {
+            log.info("Different transaction to: ${transaction.to}, ${retailerKey}")
             throw new TransactionVerificationException()
         }
-        if (transaction.to != retailerKey) {
-            log.info("Different retailer public key: ${transaction.to}, ${retailerKey}")
-            throw new TransactionVerificationException()
-        }
-        if (transaction.value != points) {
-            log.info("Different transaction value: ${transaction.value}, ${points}")
-            throw new TransactionVerificationException()
-        }
+        // TODO verify userKey, points - with transaction.raw probably
     }
 }
