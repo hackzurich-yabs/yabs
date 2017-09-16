@@ -61,7 +61,7 @@ class RetailerDetails : AppCompatActivity() {
             if (scanResult != null) {
                 // handle scan result
                 Log.e("kasper", "toString() returns: " + scanResult.toString())
-                disposable = Companion.claimPointsApi.claim(walletManager.getWallet().ecKeyPair.publicKey.toString(), retailer.publicKey, scanResult.contents)
+                disposable = Companion.claimPointsApi.claim(walletManager.getWallet().address, retailer.publicKey, scanResult.contents)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(IoScheduler())
                         .subscribe({
