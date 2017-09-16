@@ -7,6 +7,7 @@ import android.widget.TextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
+import java.math.BigInteger
 
 class YabsAmountView : TextView {
 
@@ -21,12 +22,17 @@ class YabsAmountView : TextView {
     private var dispose: Disposable? = null
 
     fun reload() {
+        if (amount != null) {
+            text = "$amount yabs"
+
+        }
         dispose?.dispose()
         dispose = yabsContractService.executeRx { wallet -> getYabs(wallet) }
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     text = "${it.value} yabs"
+                    amount = it.value
                 }, {
                     Log.e("YabsAmount", "error while getting yabs: $it")
                 })
@@ -38,5 +44,6 @@ class YabsAmountView : TextView {
 
     companion object {
         lateinit var yabsContractService: YabContractService
+        private var amount: BigInteger? = null
     }
 }
