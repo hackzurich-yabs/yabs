@@ -67,9 +67,9 @@ class YabsTest {
     @Ignore
     @Test
     void shouldGiveRetailersCoinsToMobile() throws Exception {
-        giveRetailersCoinsToMobile("Coop", 1000L)
-        giveRetailersCoinsToMobile("Zalando", 99L)
-        giveRetailersCoinsToMobile("Fashwell", 200L)
+        giveRetailersCoinsToMobile("Swiss", 1600L)
+        giveRetailersCoinsToMobile("Zalando", 100L)
+        giveRetailersCoinsToMobile("Siroop", 2200L)
     }
 
     private void giveRetailersCoinsToMobile(String retailerName, long points) {
