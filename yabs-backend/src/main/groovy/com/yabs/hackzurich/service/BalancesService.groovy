@@ -30,7 +30,7 @@ class BalancesService {
             new BalanceData(
                     it.publicKey,
                     it.name,
-                    new BigInteger(contract.getBalance(new Address(userPublicKey), new Address(it.publicKey)).get().toString())
+                    contract.getBalance(new Address(userPublicKey), new Address(it.publicKey)).get().value
             )
         }
     }
