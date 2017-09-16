@@ -26,6 +26,7 @@ class RetailerDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
+        setSupportActionBar(toolbar_top)
         retailerCoinsTextView.text = retailer.balance
         setRetailerLayout(retailer.name)
         scanReceiptButton.setOnClickListener {
