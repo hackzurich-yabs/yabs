@@ -3,6 +3,7 @@ package io.github.yabs.yabsmobile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -74,10 +75,21 @@ class PromoCodeActivity : AppCompatActivity() {
                 .subscribe({
                     promoCodeListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.promo_code_field) { holder, item ->
                         holder.itemView.promoCodeTextView.text = item
+                        holder.itemView.promoCodeImage.setColorFilter(getColorTint(retailer.name))
                     }
                 }, {
                     Log.e("kasper", "$it")
                 })
+    }
+
+    private fun getColorTint(name: String): Int {
+        return when (name) {
+            "Coop" -> ContextCompat.getColor(this, R.color.coop)
+            "Siroop" -> ContextCompat.getColor(this, R.color.siroop)
+            "Swiss" -> ContextCompat.getColor(this, R.color.swiss)
+            "Zalando" -> ContextCompat.getColor(this, R.color.zalandoColor)
+            else -> throw RuntimeException("Unsupported retailer $name")
+        }
     }
 
     override fun onDestroy() {

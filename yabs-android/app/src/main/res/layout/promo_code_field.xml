@@ -9,11 +9,11 @@
     android:paddingTop="8dp">
 
     <ImageView
+        android:id="@+id/promoCodeImage"
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:scaleType="fitStart"
-        android:src="@drawable/promo_code"
-        android:tint="@color/coop" />
+        android:src="@drawable/promo_code" />
 
     <TextView
         android:id="@+id/promoCodeTextView"
