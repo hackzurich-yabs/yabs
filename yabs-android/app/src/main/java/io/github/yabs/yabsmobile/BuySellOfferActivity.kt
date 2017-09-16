@@ -15,20 +15,19 @@ import com.elpassion.android.view.hide
 import com.elpassion.android.view.show
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.progress.*
+import kotlinx.android.synthetic.main.toolbar.*
 import java.math.BigInteger
 
 abstract class BuySellOfferActivity : AppCompatActivity() {
 
     protected val retailer by lazy { intent.getSerializableExtra(RETAILER_KEY) as Retailer }
-    private val yabsAmount by lazy { intent.getSerializableExtra(YABS_KEY) as BigInteger }
 
-    protected var disposable: Disposable? = null
+    protected var disposable: CompositeDisposable = CompositeDisposable()
     private val api by lazy {
         Companion.api.offers(retailer.publicKey)
                 .subscribeOn(IoScheduler())
@@ -40,14 +39,13 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         setContentView(R.layout.offers_list)
         setSupportActionBar(toolbar_top)
         offersList.layoutManager = LinearLayoutManager(this)
-        yabsAmountText.text = "$yabsAmount yabs"
-        disposable = api.map { extractOffers(it) }
+        disposable.add(api.map { extractOffers(it) }
                 .bindLoader(progressBar)
                 .subscribe({
                     offersList.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.offer_field, this::bindOffer)
                 }, {
                     Log.e("kasper", "$it")
-                })
+                }))
         addOfferButton.setOnClickListener {
             addOfferDialog.show()
         }
@@ -57,7 +55,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         dialogPositiveButton.setOnClickListener {
             val points = BigInteger(offerPointsAmount.text.toString())
             val yabs = BigInteger(offerYabsPointsAmount.text.toString())
-            disposable = createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailerKey = retailer.publicKey))
+            disposable.add(createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailerKey = retailer.publicKey))
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe {
@@ -69,8 +67,24 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                         Toast.makeText(this, "Udalo sie!!", Toast.LENGTH_LONG).show()
                     }, {
                         Log.e("kasper", "$it")
-                    })
+                    }))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshYabs()
+    }
+
+    private fun refreshYabs() {
+        disposable.add(yabContractService.executeRx { getYabs(walletManager.getWallet()) }
+                .subscribeOn(IoScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    yabsAmountText.text = "${it.value} yabs"
+                }, {
+                    Log.e("kasper", "msg $it")
+                }))
     }
 
     private fun Activity.hideKeyboard() {
@@ -82,16 +96,18 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         buyOfferPointsTextView.text = offer.points.toString()
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
-        setOnClickListener {
-            disposable = fulFillOffer(offer.uid, offer.userKey)
+        setOnClickListener { _ ->
+            disposable.add(fulFillOffer(offer.uid, offer.userKey).toObservable<Unit>()
+                    .flatMap { yabContractService.executeRx { getYabs(walletManager.getWallet()) } }
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .bindLoader(progressBar)
-                    .subscribe({
+                    .subscribe({ a ->
+                        yabsAmountText.text = "${a.value} yabs"
                         Toast.makeText(context, "Udalo sie!!", Toast.LENGTH_LONG).show()
                     }, {
                         Log.e("kasper", "$it")
-                    })
+                    }))
         }
     }
 
@@ -100,7 +116,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
     abstract fun extractOffers(buySellOffers: BuySellOffers): List<OfferData>
 
     override fun onDestroy() {
-        disposable?.dispose()
+        disposable.clear()
         super.onDestroy()
     }
 
@@ -109,12 +125,10 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         lateinit var walletManager: WalletManager
         lateinit var yabContractService: YabContractService
 
-        fun intent(context: Context, retailer: Retailer, clazz: Class<out BuySellOfferActivity>, yabsAmount: BigInteger) = Intent(context, clazz)
+        fun intent(context: Context, retailer: Retailer, clazz: Class<out BuySellOfferActivity>) = Intent(context, clazz)
                 .putExtra(RETAILER_KEY, retailer)
-                .putExtra(YABS_KEY, yabsAmount)
 
         private const val RETAILER_KEY = "retailer"
-        private const val YABS_KEY = "amount"
     }
 
     abstract fun createOffer(offerData: OfferData): Completable

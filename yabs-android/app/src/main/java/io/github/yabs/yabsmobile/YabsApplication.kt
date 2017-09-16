@@ -5,6 +5,9 @@ import android.preference.PreferenceManager
 import android.support.multidex.MultiDexApplication
 import com.elpassion.android.commons.sharedpreferences.createSharedPrefs
 import com.elpassion.sharedpreferences.gsonadapter.gsonConverterAdapter
+import io.github.yabs.yabsmobile.solidity.YabsContract
+import org.web3j.abi.datatypes.Address
+import org.web3j.crypto.Credentials
 
 class YabsApplication : MultiDexApplication() {
 
@@ -30,3 +33,5 @@ var contextProvider: () -> Context = { TODO() }
 
 inline fun <reified T> sharedPrefsProvider() =
         createSharedPrefs({ PreferenceManager.getDefaultSharedPreferences(contextProvider()) }, gsonConverterAdapter<T>(gson = gsonProvider))
+
+fun YabsContract.getYabs(wallet: Credentials) = getBalance(Address(wallet.address), Address("0x0"))

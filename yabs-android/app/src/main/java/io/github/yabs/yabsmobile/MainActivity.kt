@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
-import io.github.yabs.yabsmobile.solidity.YabsContract
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -15,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         disposable?.dispose()
-        disposable = Observable.zip<List<Retailer>, Uint256, Pair<List<Retailer>, Uint256>>(retailersApi.balances(wallet.address), yabsService.executeRx { getYabs() }, BiFunction { a, b -> a to b })
+        disposable = Observable.zip<List<Retailer>, Uint256, Pair<List<Retailer>, Uint256>>(retailersApi.balances(wallet.address), yabsService.executeRx { getYabs(wallet) }, BiFunction { a, b -> a to b })
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .bindLoader(progressBar)
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 })
     }
 
-    private fun YabsContract.getYabs() = getBalance(Address(wallet.address), Address("0x0"))
+
 
     override fun onDestroy() {
         disposable?.dispose()

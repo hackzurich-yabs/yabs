@@ -39,10 +39,10 @@ class RetailerDetails : AppCompatActivity() {
             PromoCodeActivity.start(this, retailer, yabsAmount)
         }
         sellPointsButton.setOnClickListener {
-            YouAreSellingActivity.start(this, retailer, yabsAmount)
+            YouAreSellingActivity.start(this, retailer)
         }
         buyPointsButton.setOnClickListener {
-            YouAreBuyingActivity.start(this, retailer, yabsAmount)
+            YouAreBuyingActivity.start(this, retailer)
         }
     }
 
