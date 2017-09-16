@@ -26,7 +26,6 @@ class WalletService {
     RetailerRepository retailerRepository
 
     void loadRetailersFromFiles() {
-//        log.info(retailersDirectory.listFiles() as String)
         retailersDirectory.listFiles().collect { File file ->
             retailerRepository.save(new Retailer(
                 publicKey: readCredentialsFromFile(file).address,
