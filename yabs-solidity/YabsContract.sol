@@ -51,6 +51,7 @@ contract YabsContract {
         balances[msg.sender][0x0] = balances[msg.sender][0x0] + offer.yabs;
         balances[user][offer.retailer] = balances[user][offer.retailer] + offer.points;
         balances[msg.sender][offer.retailer] = balances[msg.sender][offer.retailer] - offer.points;
+        buyOffers[user][id] = Offer(0x0, 0, 0);
     }
 
     function createSellOffer(uint256 id, address retailer, uint256 points, uint256 yabs) {
@@ -65,5 +66,6 @@ contract YabsContract {
         balances[msg.sender][0x0] = balances[msg.sender][0x0] - offer.yabs;
         balances[user][offer.retailer] = balances[user][offer.retailer] - offer.points;
         balances[msg.sender][offer.retailer] = balances[msg.sender][offer.retailer] + offer.points;
+        sellOffers[user][id] = Offer(0x0, 0, 0);
     }
 }
