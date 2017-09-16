@@ -21,8 +21,8 @@
         </activity>
 
         <activity android:name=".RetailerDetails" />
-        <activity android:name=".SellOffersActivity" />
-        <activity android:name=".BuyOffersActivity" />
+        <activity android:name=".YouAreBuyingActivity" />
+        <activity android:name=".YouAreSellingActivity" />
         <activity android:name=".PromoCodeActivity" />
     </application>
 
