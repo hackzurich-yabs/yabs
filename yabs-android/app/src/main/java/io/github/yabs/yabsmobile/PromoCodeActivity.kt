@@ -4,11 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
+import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_retailer_field.view.*
+import kotlinx.android.synthetic.main.promo_code_field.view.*
 import kotlinx.android.synthetic.main.promo_codes_list.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
@@ -23,6 +28,7 @@ class PromoCodeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.promo_codes_list)
         retailerCoinsTextView.text = retailer.balance
+        promoCodeListView.layoutManager = LinearLayoutManager(this)
 
         claimPromoCodeButton.setOnClickListener {
             val points = Uint256(200)
@@ -40,6 +46,26 @@ class PromoCodeActivity : AppCompatActivity() {
                         Log.e("kasper", "$it")
                     })
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        disposable?.dispose()
+        disposable = claimPromoApi.getPromoCodes(walletManager.getWallet().address, retailer.publicKey)
+                .subscribeOn(IoScheduler())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.promo_code_field) { holder, item ->
+                        holder.itemView.promoCodeTextView.text = item
+                    }
+                }, {
+                    Log.e("kasper", "$it")
+                })
+    }
+
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
     }
 
     companion object {
