@@ -13,6 +13,8 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_retailer_field.view.*
+import kotlinx.android.synthetic.main.progress.*
+import kotlinx.android.synthetic.main.toolbar.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
 
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         retailerListView.layoutManager = LinearLayoutManager(this)
+        setSupportActionBar(toolbar_top)
     }
 
     override fun onResume() {
@@ -36,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .bindLoader(progressBar)
                 .subscribe({
-                    yabsAmount.text = "You have ${it.second.value} yabs"
+                    yabsAmountText.text = "${it.second.value} yabs"
                     retailerListView.adapter = basicAdapterWithLayoutAndBinder(it.first, R.layout.main_retailer_field) { holder, item ->
                         holder.itemView.retailerNameTextView.text = item.name
                         holder.itemView.pointsCountTextView.text = item.balance

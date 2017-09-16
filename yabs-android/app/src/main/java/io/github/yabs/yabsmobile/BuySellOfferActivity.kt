@@ -17,6 +17,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.progress.*
 import java.math.BigInteger
 
 abstract class BuySellOfferActivity : AppCompatActivity() {
@@ -34,8 +36,9 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.offers_list)
+        setSupportActionBar(toolbar_top)
         offersList.layoutManager = LinearLayoutManager(this)
-        yabsAmountText.text = "You have $yabsAmount yabs"
+        yabsAmountText.text = "$yabsAmount yabs"
         disposable = api.map { extractOffers(it) }
                 .bindLoader(progressBar)
                 .subscribe({

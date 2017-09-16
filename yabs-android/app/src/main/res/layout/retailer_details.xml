@@ -9,13 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/yabsAmountText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColor="#000000" />
+        <include layout="@layout/toolbar" />
 
         <include layout="@layout/retailers_detail_top" />
 
@@ -64,11 +58,5 @@
         </FrameLayout>
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="#ffffff"
-        android:visibility="gone" />
+    <include layout="@layout/progress" />
 </FrameLayout>
