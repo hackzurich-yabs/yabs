@@ -24,13 +24,13 @@ class OffersService {
     @Autowired
     private SellOfferRepository sellOfferRepository
 
-    void createBuyOffer(OfferData offerData) { // TODO to nie dziala :(
+    void createBuyOffer(OfferData offerData) {
         BuyOffer buyOffer = OfferMapper.toBuyOffer(offerData)
         log.info(buyOffer as String)
         buyOfferRepository.save(buyOffer)
     }
 
-    void createSaleOffer(OfferData offerData) { // TODO jw
+    void createSaleOffer(OfferData offerData) {
         SellOffer sellOffer = OfferMapper.toSellOffer(offerData)
         sellOfferRepository.save(sellOffer)
     }

@@ -1,37 +1,35 @@
-package com.yabs.hackzurich.service;
+package com.yabs.hackzurich.service
 
 import com.yabs.hackzurich.dto.BalanceData
-import com.yabs.hackzurich.solidity.SolidityService;
-import com.yabs.hackzurich.solidity.YabsContract;
-import groovy.transform.CompileStatic;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.web3j.abi.datatypes.Address;
+import com.yabs.hackzurich.solidity.SolidityService
+import com.yabs.hackzurich.solidity.YabsContract
+import groovy.transform.CompileStatic
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import org.web3j.abi.datatypes.Address
 
 @Service
 @CompileStatic
 class BalancesService {
 
-    private final RetailersService retailersService
-    private final SolidityService solidityService
+    @Autowired
+    private RetailersService retailersService
 
     @Autowired
-    BalancesService(RetailersService retailersService, SolidityService solidityService) {
-        this.retailersService = retailersService
-        this.solidityService = solidityService
-    }
+    private SolidityService solidityService
 
-    List<BalanceData> getBalancesForUser(final String userPublicKey) {
-
-        final YabsContract contract = solidityService.getYabsContract()
-
-        retailersService.list()
-                .collect {
+    List<BalanceData> getBalancesForUser(String userPublicKey) {
+        retailersService.list().collect { retailer ->
             new BalanceData(
-                    it.publicKey,
-                    it.name,
-                    contract.getBalance(new Address(userPublicKey), new Address(it.publicKey)).get().value
+                publicKey: retailer.publicKey,
+                name: retailer.name,
+                balance: getBalanceValue(userPublicKey, retailer.publicKey)
             )
         }
+    }
+
+    private BigInteger getBalanceValue(String userKey, String retailerKey) {
+        YabsContract contract = solidityService.getYabsContract()
+        return contract.getBalance(new Address(userKey), new Address(retailerKey)).get().value
     }
 }

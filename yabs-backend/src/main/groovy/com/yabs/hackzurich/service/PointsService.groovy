@@ -12,12 +12,8 @@ import org.web3j.abi.datatypes.generated.Uint256
 @CompileStatic
 class PointsService {
 
-    private final SolidityService solidityService
-
     @Autowired
-    PointsService(SolidityService solidityService) {
-        this.solidityService = solidityService
-    }
+    private SolidityService solidityService
 
     void claim(String userKey, String retailerKey, String receiptId) {
         YabsContract contract = solidityService.getYabsContract(retailerKey)

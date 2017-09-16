@@ -9,7 +9,6 @@ import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.JsonRpc2_0Web3j
-import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.protocol.infura.InfuraHttpService
 import org.web3j.tx.Contract
 import org.web3j.tx.Transfer
@@ -32,8 +31,8 @@ class YabsTest {
     @Test
     void shouldDeploy() throws Exception {
         String contractAddress = YabsContract.deploy(web3j, credentials, GAS_PRICE, Contract.GAS_LIMIT, BigInteger.ZERO)
-                .get()
-                .contractAddress
+            .get()
+            .contractAddress
         configuration.write("yabsAddress=$contractAddress")
         println(contractAddress)
     }

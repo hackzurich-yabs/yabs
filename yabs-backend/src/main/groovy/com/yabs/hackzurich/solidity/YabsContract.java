@@ -1,10 +1,5 @@
 package com.yabs.hackzurich.solidity;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.Future;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Function;
@@ -16,11 +11,17 @@ import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Future;
+
 /**
  * Auto generated code.<br>
  * <strong>Do not modify!</strong><br>
  * Please use the <a href="https://docs.web3j.io/command_line.html">web3j command line tools</a>, or {@link org.web3j.codegen.SolidityFunctionWrapperGenerator} to update.
- *
+ * <p>
  * <p>Generated with web3j version 2.3.0.
  */
 public final class YabsContract extends Contract {
@@ -60,16 +61,22 @@ public final class YabsContract extends Contract {
     }
 
     public Future<List<Type>> sellOffers(Address param0, Uint256 param1) {
-        Function function = new Function("sellOffers", 
-                Arrays.<Type>asList(param0, param1), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}, new TypeReference<Uint256>() {}, new TypeReference<Uint256>() {}));
+        Function function = new Function("sellOffers",
+                Arrays.<Type>asList(param0, param1),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {
+                }, new TypeReference<Uint256>() {
+                }, new TypeReference<Uint256>() {
+                }));
         return executeCallMultipleValueReturnAsync(function);
     }
 
     public Future<List<Type>> buyOffers(Address param0, Uint256 param1) {
-        Function function = new Function("buyOffers", 
-                Arrays.<Type>asList(param0, param1), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}, new TypeReference<Uint256>() {}, new TypeReference<Uint256>() {}));
+        Function function = new Function("buyOffers",
+                Arrays.<Type>asList(param0, param1),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {
+                }, new TypeReference<Uint256>() {
+                }, new TypeReference<Uint256>() {
+                }));
         return executeCallMultipleValueReturnAsync(function);
     }
 
@@ -84,16 +91,18 @@ public final class YabsContract extends Contract {
     }
 
     public Future<Uint256> balances(Address param0, Address param1) {
-        Function function = new Function("balances", 
-                Arrays.<Type>asList(param0, param1), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+        Function function = new Function("balances",
+                Arrays.<Type>asList(param0, param1),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {
+                }));
         return executeCallSingleValueReturnAsync(function);
     }
 
     public Future<Uint256> getBalance(Address user, Address retailer) {
-        Function function = new Function("getBalance", 
-                Arrays.<Type>asList(user, retailer), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
+        Function function = new Function("getBalance",
+                Arrays.<Type>asList(user, retailer),
+                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {
+                }));
         return executeCallSingleValueReturnAsync(function);
     }
 

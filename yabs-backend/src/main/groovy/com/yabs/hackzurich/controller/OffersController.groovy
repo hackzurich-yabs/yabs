@@ -4,7 +4,6 @@ import com.yabs.hackzurich.dto.OfferData
 import com.yabs.hackzurich.dto.OffersData
 import com.yabs.hackzurich.service.OffersService
 import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RequestBody
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @CompileStatic
-@Slf4j
 class OffersController {
 
     @Autowired
@@ -46,8 +44,8 @@ class OffersController {
     @RequestMapping(value = '/acceptSellOffer', method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     void acceptSellOffer(@RequestParam String userKey,
-                        @RequestParam Long uid,
-                        @RequestParam String transactionHash) {
+                         @RequestParam Long uid,
+                         @RequestParam String transactionHash) {
         offersService.acceptSellOffer(userKey, uid, transactionHash)
     }
 

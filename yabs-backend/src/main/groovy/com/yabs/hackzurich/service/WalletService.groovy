@@ -23,7 +23,7 @@ class WalletService {
     final Credentials readOnlyCredentials = WalletUtils.loadCredentials(password, new File(tempDirectory, readOnlyFileName))
 
     @Autowired
-    RetailerRepository retailerRepository
+    private RetailerRepository retailerRepository
 
     void loadRetailersFromFiles() {
         retailersDirectory.listFiles().collect { File file ->

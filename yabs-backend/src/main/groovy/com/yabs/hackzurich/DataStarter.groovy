@@ -13,6 +13,7 @@ class DataStarter implements CommandLineRunner {
 
     @Autowired
     private RetailerRepository retailerRepository
+
     @Autowired
     private WalletService walletRepository
 
