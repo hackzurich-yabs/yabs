@@ -25,6 +25,14 @@ class PromoCodeController {
                           @RequestParam String retailerKey,
                           @RequestParam String transactionHash,
                           @RequestParam BigInteger points) {
-        return "\"${promoCodeService.getPromoCode()}\""
+        return "\"${promoCodeService.getPromoCode(userKey, retailerKey, transactionHash, points)}\""
+    }
+
+    @RequestMapping(value = '/getPromoCodes', method = RequestMethod.GET, produces = 'application/json')
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    List<String> getPromoCodes(@RequestParam String userKey,
+                               @RequestParam String retailerKey) {
+        return promoCodeService.getPromoCodes(userKey, retailerKey)
     }
 }
