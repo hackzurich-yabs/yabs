@@ -47,7 +47,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
             addOfferDialog.hide()
         }
         dialogPositiveButton.setOnClickListener {
-            val points = BigInteger(pointsCountTextView.text.toString())
+            val points = BigInteger(offerPointsAmount.text.toString())
             val yabs = BigInteger(offerYabsPointsAmount.text.toString())
             disposable = createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailersKey = retailer.publicKey))
                     .subscribeOn(IoScheduler())
