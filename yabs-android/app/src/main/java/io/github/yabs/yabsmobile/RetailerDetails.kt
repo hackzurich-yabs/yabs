@@ -13,12 +13,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.retailer_details.*
+import java.math.BigInteger
 
 
 class RetailerDetails : AppCompatActivity() {
 
     private val retailer by lazy { intent.getSerializableExtra(RETAILER_KEY) as Retailer }
-
+    private val yabsAmount by lazy { intent.getSerializableExtra(YABS_KEY) as BigInteger }
     private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,18 +27,19 @@ class RetailerDetails : AppCompatActivity() {
         setContentView(R.layout.retailer_details)
         retailerName.text = retailer.name
         retailerCoinsTextView.text = retailer.balance
+        yabsAmountText.text = "You have $yabsAmount yabs"
         scanReceiptButton.setOnClickListener {
             val integrator = IntentIntegrator(this)
             integrator.initiateScan()
         }
         claimPromoButton.setOnClickListener {
-            PromoCodeActivity.start(this, retailer)
+            PromoCodeActivity.start(this, retailer, yabsAmount)
         }
         sellPointsButton.setOnClickListener {
-            YouAreSellingActivity.start(this, retailer)
+            YouAreSellingActivity.start(this, retailer, yabsAmount)
         }
         buyPointsButton.setOnClickListener {
-            YouAreBuyingActivity.start(this, retailer)
+            YouAreBuyingActivity.start(this, retailer, yabsAmount)
         }
     }
 
@@ -71,11 +73,14 @@ class RetailerDetails : AppCompatActivity() {
     }
 
     companion object {
-        fun start(context: Context, retailer: Retailer) {
-            context.startActivity(Intent(context, RetailerDetails::class.java).putExtra(RETAILER_KEY, retailer))
+        fun start(context: Context, retailer: Retailer, yabsAmount: BigInteger) {
+            context.startActivity(Intent(context, RetailerDetails::class.java)
+                    .putExtra(RETAILER_KEY, retailer)
+                    .putExtra(YABS_KEY, yabsAmount))
         }
 
         private const val RETAILER_KEY = "retailer"
+        private const val YABS_KEY = "amount"
         lateinit var walletManager: WalletManager
         lateinit var claimPointsApi: ClaimPointsApi
     }

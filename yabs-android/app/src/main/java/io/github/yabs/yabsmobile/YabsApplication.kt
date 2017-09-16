@@ -14,6 +14,7 @@ class YabsApplication : MultiDexApplication() {
         val walletManager = WalletManager(applicationContext)
         val yabContractService = YabContractService(ContractAdressApi.INSTANCE, walletManager)
         MainActivity.walletManager = walletManager
+        MainActivity.yabsService = yabContractService
         RetailerDetails.walletManager = walletManager
         PromoCodeActivity.walletManager = walletManager
         PromoCodeActivity.yabContractService = yabContractService

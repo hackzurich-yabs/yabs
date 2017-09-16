@@ -22,6 +22,8 @@ import java.math.BigInteger
 abstract class BuySellOfferActivity : AppCompatActivity() {
 
     protected val retailer by lazy { intent.getSerializableExtra(RETAILER_KEY) as Retailer }
+    private val yabsAmount by lazy { intent.getSerializableExtra(YABS_KEY) as BigInteger }
+
     protected var disposable: Disposable? = null
     private val api by lazy {
         Companion.api.offers(retailer.publicKey)
@@ -33,6 +35,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.offers_list)
         offersList.layoutManager = LinearLayoutManager(this)
+        yabsAmountText.text = "You have $yabsAmount yabs"
         disposable = api.map { extractOffers(it) }
                 .bindLoader(progressBar)
                 .subscribe({
@@ -95,10 +98,12 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         lateinit var walletManager: WalletManager
         lateinit var yabContractService: YabContractService
 
-        fun intent(context: Context, retailer: Retailer, clazz: Class<out BuySellOfferActivity>) = Intent(context, clazz)
+        fun intent(context: Context, retailer: Retailer, clazz: Class<out BuySellOfferActivity>, yabsAmount: BigInteger) = Intent(context, clazz)
                 .putExtra(RETAILER_KEY, retailer)
+                .putExtra(YABS_KEY, yabsAmount)
 
         private const val RETAILER_KEY = "retailer"
+        private const val YABS_KEY = "amount"
     }
 
     abstract fun createOffer(offerData: OfferData): Completable
