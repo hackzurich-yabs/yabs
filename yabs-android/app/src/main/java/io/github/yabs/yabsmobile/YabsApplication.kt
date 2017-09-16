@@ -11,7 +11,9 @@ class YabsApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         contextProvider = { applicationContext }
-        MainActivity.walletManager = WalletManager(applicationContext)
+        val walletManager = WalletManager(applicationContext)
+        MainActivity.walletManager = walletManager
+        RetailerDetails.walletManager = walletManager
     }
 }
 
