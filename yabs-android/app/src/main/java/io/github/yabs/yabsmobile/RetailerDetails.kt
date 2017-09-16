@@ -13,8 +13,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.retailer_details.*
-import org.web3j.abi.datatypes.Address
-import org.web3j.abi.datatypes.generated.Uint256
 
 
 class RetailerDetails : AppCompatActivity() {
@@ -33,20 +31,7 @@ class RetailerDetails : AppCompatActivity() {
             integrator.initiateScan()
         }
         claimPromoButton.setOnClickListener {
-            val points = Uint256(200)
-            disposable = yabContractService
-                    .executeRx { claimPromoCode(Address(retailer.publicKey), points) }
-                    .flatMap {
-                        claimPromoApi.claim(walletManager.getWallet().address, retailer.publicKey, it.transactionHash, points.value)
-                    }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(IoScheduler())
-                    .subscribe({
-                        Toast.makeText(this, "PromoCode : $it", Toast.LENGTH_LONG).show()
-                    }, {
-                        Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
-                        Log.e("kasper", "$it")
-                    })
+            PromoCodeActivity.start(this, retailer)
         }
         sellPointsButton.setOnClickListener {
             SellOffersActivity.start(this, retailer)
@@ -91,8 +76,6 @@ class RetailerDetails : AppCompatActivity() {
 
         private const val RETAILER_KEY = "retailer"
         lateinit var walletManager: WalletManager
-        lateinit var yabContractService: YabContractService
         lateinit var claimPointsApi: ClaimPointsApi
-        lateinit var claimPromoApi: ClaimPromoCodeApi
     }
 }

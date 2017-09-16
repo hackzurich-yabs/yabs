@@ -13,6 +13,10 @@ interface ClaimPromoCodeApi {
               @Query("transactionHash") transactionHas: String,
               @Query("points") points: BigInteger): Observable<String>
 
+    @GET("getPromoCodes")
+    fun getPromoCodes(@Query("userKey") userKey: String,
+                      @Query("retailerKey") retailerKey: String): Observable<List<String>>
+
     companion object {
         val INSTANCE by lazy { retrofit.create(ClaimPromoCodeApi::class.java) }
     }
