@@ -55,7 +55,7 @@ class PromoCodeActivity : AppCompatActivity() {
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.promo_code_field) { holder, item ->
+                    promoCodeListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.promo_code_field) { holder, item ->
                         holder.itemView.promoCodeTextView.text = item
                     }
                 }, {
