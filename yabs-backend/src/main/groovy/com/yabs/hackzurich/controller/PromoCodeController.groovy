@@ -25,6 +25,6 @@ class PromoCodeController {
                           @RequestParam String retailerKey,
                           @RequestParam String transactionHash,
                           @RequestParam BigInteger points) {
-        return promoCodeService.getPromoCode()
+        return "\"{promoCodeService.getPromoCode()}\""
     }
 }
