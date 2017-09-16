@@ -47,6 +47,12 @@ class YabsTest {
         giveOneEtherToAddress(addersOfRetailer("Zalando"))
     }
 
+    @Ignore
+    @Test
+    void shouldGiveSomeMoneyToMobile() throws Exception {
+        giveOneEtherToAddress("0xa8c9924051886c083a3149196605df2358988c47")
+    }
+
     private void giveOneEtherToAddress(String address) {
         Transfer.sendFunds(web3j, credentials, address, BigDecimal.ONE, Convert.Unit.ETHER)
     }
