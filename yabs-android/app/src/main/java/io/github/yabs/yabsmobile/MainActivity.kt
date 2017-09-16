@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.retailer_item.view.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,9 +31,9 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.retailer_item) { holder, item ->
-                        holder.itemView.retailerName.text = item.name
-                        holder.itemView.retailerCoinsCount.text = item.balance
+                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.main_retailer_field) { holder, item ->
+                        holder.itemView.retailerNameTextView.text = item.name
+                        holder.itemView.pointsCountTextView.text = item.balance
                         holder.itemView.setOnClickListener {
                             RetailerDetails.start(this, item)
                         }
