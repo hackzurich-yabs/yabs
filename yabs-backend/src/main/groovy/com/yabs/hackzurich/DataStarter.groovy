@@ -1,28 +1,35 @@
 package com.yabs.hackzurich
 
 import com.yabs.hackzurich.dao.RetailerRepository
+import com.yabs.hackzurich.dao.WalletRepository
 import com.yabs.hackzurich.model.Retailer
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
+import org.web3j.crypto.Credentials
+import org.web3j.crypto.WalletUtils
+
+import java.nio.file.Files
+import java.nio.file.Path
 
 @CompileStatic
 @Component
 class DataStarter implements CommandLineRunner {
 
-    private final static List<Retailer> retailers = [
-        new Retailer(publicKey: 'publicKey1', privateKey: 'privateKey1', name: 'retailer1'),
-        new Retailer(publicKey: 'publicKey2', privateKey: 'privateKey2', name: 'retailer2')
-    ]
-
     @Autowired
     private RetailerRepository retailerRepository
 
-
     @Override
     void run(String... strings) throws Exception {
-        retailers.each { retailerRepository.save(it) }
+        (0..2).each {
+            String walletFile = WalletRepository.crateNewWalletFile()
+            retailerRepository.save(new Retailer(
+                    publicKey: WalletRepository.readCredentials(walletFile).address,
+                    privateKey: walletFile,
+                    name: "Zalando"
+            ))
+        }
     }
 
 }
