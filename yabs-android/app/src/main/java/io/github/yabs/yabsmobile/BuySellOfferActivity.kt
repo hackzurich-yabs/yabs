@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.widget.Toast
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
+import com.elpassion.android.commons.recycler.basic.ViewHolderBinder
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -33,23 +34,27 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         disposable = api.map { extractOffers(it) }
                 .subscribe({
                     offersList.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.offer_field) { holder, item ->
-                        holder.itemView.buyOfferYabsTextView.text = item.points.toString()
-                        holder.itemView.buyOfferYabsTextView.text = item.yabsPoints.toString()
-                        holder.itemView.buyOfferRateTextView.text = (item.points.toDouble() / item.yabsPoints.toDouble()).toString()
-                        holder.itemView.setOnClickListener {
-                            disposable = fulFillOffer(points = item.points, yabsPoints = item.yabsPoints, id = item.uid)
-                                    .subscribeOn(IoScheduler())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({
-                                        Toast.makeText(this, "Udalo sie!!", Toast.LENGTH_LONG).show()
-                                    }, {
-                                        Log.e("kasper", "$it")
-                                    })
-                        }
+                        bindOffer(holder, item)
                     }
                 }, {
                     Log.e("kasper", "$it")
                 })
+    }
+
+    private fun bindOffer(holder: ViewHolderBinder<OfferData>, offer: OfferData) = with(holder.itemView) {
+        buyOfferYabsTextView.text = offer.points.toString()
+        buyOfferYabsTextView.text = offer.yabsPoints.toString()
+        buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
+        setOnClickListener {
+            disposable = fulFillOffer(points = offer.points, yabsPoints = offer.yabsPoints, id = offer.uid)
+                    .subscribeOn(IoScheduler())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        Toast.makeText(context, "Udalo sie!!", Toast.LENGTH_LONG).show()
+                    }, {
+                        Log.e("kasper", "$it")
+                    })
+        }
     }
 
     abstract fun fulFillOffer(points: BigInteger, yabsPoints: BigInteger, id: Long): Completable
