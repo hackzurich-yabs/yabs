@@ -19,13 +19,15 @@ class DataStarter implements CommandLineRunner {
 
     @Autowired
     private RetailerRepository retailerRepository
+    @Autowired
+    private WalletRepository walletRepository
 
     @Override
     void run(String... strings) throws Exception {
         (0..2).each {
-            String walletFile = WalletRepository.crateNewWalletFile()
+            String walletFile = walletRepository.crateNewWalletFile()
             retailerRepository.save(new Retailer(
-                    publicKey: WalletRepository.readCredentials(walletFile).address,
+                    publicKey: walletRepository.readCredentials(walletFile).address,
                     privateKey: walletFile,
                     name: "Zalando"
             ))
