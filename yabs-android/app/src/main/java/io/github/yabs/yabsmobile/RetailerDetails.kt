@@ -60,7 +60,7 @@ class RetailerDetails : AppCompatActivity() {
                         .subscribeOn(IoScheduler())
                         .bindLoader(progressBar)
                         .subscribe({
-                            Toast.makeText(this, "Wyslano", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Receipt has been sent", Toast.LENGTH_LONG).show()
                         }, {
                             Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
                         }))
