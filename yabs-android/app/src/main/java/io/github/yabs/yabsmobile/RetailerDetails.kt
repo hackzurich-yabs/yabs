@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
@@ -12,6 +13,7 @@ import io.github.yabs.yabsmobile.scanner.IntentResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.internal.schedulers.IoScheduler
+import kotlinx.android.synthetic.main.offers_list.*
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailer_details.*
 import kotlinx.android.synthetic.main.retailers_detail_top.*
@@ -60,7 +62,9 @@ class RetailerDetails : AppCompatActivity() {
                         .subscribeOn(IoScheduler())
                         .bindLoader(progressBar)
                         .subscribe({
-                            Toast.makeText(this, "Receipt has been sent", Toast.LENGTH_LONG).show()
+                            Snackbar.make(retailerDetailsScreen, "Receipt has been sent", Snackbar.LENGTH_INDEFINITE)
+                                    .setAction("Refresh", { finish() })
+                                    .show()
                         }, {
                             Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
                         }))

@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
 import com.elpassion.android.commons.recycler.basic.ViewHolderBinder
 import com.elpassion.android.view.hide
@@ -20,7 +20,6 @@ import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
 import kotlinx.android.synthetic.main.progress.*
-import kotlinx.android.synthetic.main.retailer_details.*
 import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.math.BigInteger
@@ -62,7 +61,8 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                     }
                     .bindLoader(progressBar)
                     .subscribe({
-                        Toast.makeText(this, "Your offer has been placed", Toast.LENGTH_LONG).show()
+                        Snackbar.make(offersListScreen, "Your offer has been placed", Snackbar.LENGTH_LONG)
+                                .show()
                     }, {
                         Log.e("kasper", "$it")
                     }))
@@ -102,13 +102,20 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                     .bindLoader(progressBar)
                     .subscribe({ a ->
                         yabsAmountText.text = "${a.value} yabs"
-                        Toast.makeText(context, "Offer bought", Toast.LENGTH_LONG).show()
+                        Snackbar.make(offersListScreen, "You've successfully accepted an offer", Snackbar.LENGTH_LONG)
+                                .setAction("Show", {
+                                    finish()
+                                    startOtherOne()
+                                })
+                                .show()
                         getOffers()
                     }, {
                         Log.e("kasper", "$it")
                     }))
         }
     }
+
+    abstract fun startOtherOne()
 
     abstract fun fulFillOffer(uid: Long, userKey: String): Completable
 

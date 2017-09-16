@@ -32,6 +32,10 @@ class YouAreSellingActivity : BuySellOfferActivity() {
                 .flatMapCompletable { api.createSellOffer(offerData.copy(uid = uid)) }
     }
 
+    override fun startOtherOne() {
+        YouAreBuyingActivity.start(this, retailer)
+    }
+
     companion object {
         fun start(context: Context, retailer: Retailer) {
             context.startActivity(intent(context, retailer, YouAreSellingActivity::class.java))
