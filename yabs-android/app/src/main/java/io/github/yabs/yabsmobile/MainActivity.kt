@@ -14,6 +14,7 @@ import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.progress.*
+import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe({
                     yabsAmountText.text = "${it.second.value} yabs"
                     retailerListView.adapter = basicAdapterWithLayoutAndBinder(it.first, R.layout.main_retailer_field) { holder, item ->
-                        holder.itemView.retailerNameTextView.text = item.name
+                        holder.itemView.retailerImageView.setImageResource(getImageResource(item.name))
                         holder.itemView.pointsCountTextView.text = item.balance
                         holder.itemView.setOnClickListener { _ ->
                             RetailerDetails.start(this, item, it.second.value)
@@ -50,6 +51,16 @@ class MainActivity : AppCompatActivity() {
                 }, {
                     Log.e("kasper", "$it")
                 })
+    }
+
+    fun getImageResource(name: String) : Int {
+        when(name) {
+            "Coop" -> return R.drawable.coop
+            "Fashwell" -> return R.drawable.fashwell
+            "Siroop" -> return R.drawable.siroop
+            "Zalando" -> return R.drawable.zalando
+            else -> throw RuntimeException()
+        }
     }
 
     private fun YabsContract.getYabs() = getBalance(Address(wallet.address), Address("0x0"))
