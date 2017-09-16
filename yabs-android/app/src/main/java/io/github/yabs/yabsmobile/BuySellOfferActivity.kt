@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.offer_field.view.*
 import kotlinx.android.synthetic.main.offers_list.*
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailer_details.*
+import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.math.BigInteger
 
@@ -40,6 +41,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         setContentView(R.layout.offers_list)
         setSupportActionBar(toolbar_top)
         customizeForRetailer(retailer.name, retailerBackgroundView)
+        retailerCoinsTextView.text = retailer.balance
         offersList.layoutManager = LinearLayoutManager(this)
         disposable.add(api.map { extractOffers(it) }
                 .bindLoader(progressBar)

@@ -15,6 +15,7 @@
             android:id="@+id/retailerImageView"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginBottom="4dp"
             android:scaleType="fitCenter" />
 
         <LinearLayout
@@ -28,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="1000" />
 
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text=" points"
                 android:textColor="@color/textColor"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
