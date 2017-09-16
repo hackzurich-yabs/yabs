@@ -11,8 +11,6 @@ import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAnd
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.promo_code_field.view.*
 import kotlinx.android.synthetic.main.promo_codes_list.*
 import org.web3j.abi.datatypes.Address
@@ -39,6 +37,7 @@ class PromoCodeActivity : AppCompatActivity() {
                     }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(IoScheduler())
+                    .bindLoader(progressBar)
                     .subscribe({
                         Toast.makeText(this, "PromoCode : $it", Toast.LENGTH_LONG).show()
                     }, {
@@ -54,6 +53,7 @@ class PromoCodeActivity : AppCompatActivity() {
         disposable = claimPromoApi.getPromoCodes(walletManager.getWallet().address, retailer.publicKey)
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
+                .bindLoader(progressBar)
                 .subscribe({
                     promoCodeListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.promo_code_field) { holder, item ->
                         holder.itemView.promoCodeTextView.text = item
