@@ -48,6 +48,7 @@ dependencies {
     implementation group: 'com.squareup.retrofit2', name: 'adapter-rxjava2', version: retrofit_version
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: rxjava2_version
     implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: rx_android_version
+    implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.8.1'
     implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: retrofit_version
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation ("com.elpassion.android.commons:recycler:$android_commons_version"){

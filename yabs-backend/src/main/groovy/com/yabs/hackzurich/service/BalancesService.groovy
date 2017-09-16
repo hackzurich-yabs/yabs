@@ -12,7 +12,7 @@ class BalancesService {
         return [
             new BalanceData(publicKey: userPublicKey, name: 'retailer1', balance: 100),
             new BalanceData(publicKey: 'publicKey2', name: 'retailer2', balance: 0),
-            new BalanceData(publicKey: 'publicKey3', name: 'retailer3', balance: null)
+            new BalanceData(publicKey: 'publicKey3', name: 'retailer3', balance: 30)
         ]
     }
     
