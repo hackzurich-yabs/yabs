@@ -62,7 +62,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                     }
                     .bindLoader(progressBar)
                     .subscribe({
-                        Toast.makeText(this, "Udalo sie!!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Your offer has been placed", Toast.LENGTH_LONG).show()
                     }, {
                         Log.e("kasper", "$it")
                     }))
@@ -102,7 +102,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                     .bindLoader(progressBar)
                     .subscribe({ a ->
                         yabsAmountText.text = "${a.value} yabs"
-                        Toast.makeText(context, "Udalo sie!!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Offer bought", Toast.LENGTH_LONG).show()
                         getOffers()
                     }, {
                         Log.e("kasper", "$it")
