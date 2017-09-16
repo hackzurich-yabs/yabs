@@ -9,6 +9,8 @@ import android.util.Log
 import android.widget.Toast
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
 import com.elpassion.android.commons.recycler.basic.ViewHolderBinder
+import com.elpassion.android.view.hide
+import com.elpassion.android.view.show
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -36,6 +38,12 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
                 }, {
                     Log.e("kasper", "$it")
                 })
+        addOfferButton.setOnClickListener {
+            addOfferDialog.show()
+        }
+        dialogNegativeButton.setOnClickListener {
+            addOfferDialog.hide()
+        }
     }
 
     private fun bindOffer(holder: ViewHolderBinder<OfferData>, offer: OfferData) = with(holder.itemView) {

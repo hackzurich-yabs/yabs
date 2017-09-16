@@ -2,7 +2,6 @@ package io.github.yabs.yabsmobile
 
 import android.content.Context
 import android.os.Bundle
-import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
 
 class SellOffersActivity : BuySellOfferActivity() {
@@ -10,6 +9,7 @@ class SellOffersActivity : BuySellOfferActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         offersListTitle.text = "Sell offers"
+        dialogTitle.text = "Sell offer"
     }
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.sellOffers

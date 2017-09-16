@@ -15,7 +15,7 @@ interface OffersApi {
     @POST("createSellOffer")
     fun createSellOffer(@Body offer: OfferData) : Completable
 
-    @POST("createSellOffer")
+    @POST("createBuyOffer")
     fun createBuyOffer(@Body offer: OfferData) : Completable
 
     companion object {

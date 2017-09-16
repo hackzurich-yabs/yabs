@@ -9,6 +9,7 @@ class BuyOffersActivity : BuySellOfferActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         offersListTitle.text = "Buy offers"
+        dialogTitle.text = "Buy offer"
     }
 
     override fun extractOffers(buySellOffers: BuySellOffers) = buySellOffers.buyOffers

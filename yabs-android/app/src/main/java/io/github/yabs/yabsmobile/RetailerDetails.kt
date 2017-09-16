@@ -1,5 +1,6 @@
 package io.github.yabs.yabsmobile
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -66,7 +67,7 @@ class RetailerDetails : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
+        if (requestCode == IntentIntegrator.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val scanResult: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (scanResult != null) {
                 // handle scan result
