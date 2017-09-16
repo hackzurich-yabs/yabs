@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    app:titleTextColor="#ffffff"
-    android:minHeight="?attr/actionBarSize">
+    android:minHeight="?attr/actionBarSize"
+    app:titleTextColor="#ffffff">
 
-    <TextView
+    <io.github.yabs.yabsmobile.YabsAmountView
         android:id="@+id/yabsAmountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         android:textColor="#ffffff" />
 

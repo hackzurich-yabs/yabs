@@ -6,7 +6,6 @@ import io.reactivex.Completable
 import kotlinx.android.synthetic.main.offers_list.*
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
-import java.math.BigInteger
 import java.util.*
 
 class YouAreBuyingActivity : BuySellOfferActivity() {
@@ -32,8 +31,8 @@ class YouAreBuyingActivity : BuySellOfferActivity() {
     }
 
     companion object {
-        fun start(context: Context, retailer: Retailer, yabsAmount: BigInteger) {
-            context.startActivity(intent(context, retailer, YouAreBuyingActivity::class.java,yabsAmount))
+        fun start(context: Context, retailer: Retailer) {
+            context.startActivity(intent(context, retailer, YouAreBuyingActivity::class.java))
         }
     }
 }

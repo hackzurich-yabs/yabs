@@ -5,19 +5,14 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.elpassion.android.commons.recycler.adapters.basicAdapterWithLayoutAndBinder
-import io.github.yabs.yabsmobile.solidity.YabsContract
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.BiFunction
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_retailer_field.view.*
 import kotlinx.android.synthetic.main.progress.*
 import kotlinx.android.synthetic.main.retailers_detail_top.*
 import kotlinx.android.synthetic.main.toolbar.*
-import org.web3j.abi.datatypes.Address
-import org.web3j.abi.datatypes.generated.Uint256
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,17 +30,17 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         disposable?.dispose()
-        disposable = Observable.zip<List<Retailer>, Uint256, Pair<List<Retailer>, Uint256>>(retailersApi.balances(wallet.address), yabsService.executeRx { getYabs() }, BiFunction { a, b -> a to b })
+        yabsAmountText.reload()
+        disposable = retailersApi.balances(wallet.address)
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
                 .bindLoader(progressBar)
                 .subscribe({
-                    yabsAmountText.text = "${it.second.value} yabs"
-                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(it.first, R.layout.main_retailer_field) { holder, item ->
+                    retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.main_retailer_field) { holder, item ->
                         holder.itemView.retailerImageView.setImageResource(getImageResource(item.name))
                         holder.itemView.pointsCountTextView.text = item.balance
                         holder.itemView.setOnClickListener { _ ->
-                            RetailerDetails.start(this, item, it.second.value)
+                            RetailerDetails.start(this, item)
                         }
                     }
                 }, {
@@ -67,6 +62,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         disposable?.dispose()
+        yabsAmountText.stopLoading()
         super.onDestroy()
     }
 
