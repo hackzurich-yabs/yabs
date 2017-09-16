@@ -12,6 +12,14 @@
 
         <include layout="@layout/retailers_detail_top" />
 
+        <TextView
+            android:id="@+id/claimPromoCodeButton"
+            style="@style/menutext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Claim promocode!" />
+
         <LinearLayout
             android:id="@+id/promoCodeBackgroundView"
             android:layout_width="match_parent"
@@ -32,15 +40,6 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/claimPromoCodeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_add_24dp" />
 
     <include layout="@layout/progress" />
 </FrameLayout>

@@ -33,27 +33,28 @@ class PromoCodeActivity : AppCompatActivity() {
         retailerCoinsTextView.text = retailer.balance.toString()
         yourPromoCodes.text = "Your ${retailer.name} promo codes"
         promoCodeListView.layoutManager = LinearLayoutManager(this)
-        claimPromoCodeButton.setOnClickListener {
-            val points = Uint256(retailer.promoCodePrice)
-            disposable = yabContractService
-                    .executeRx { claimPromoCode(Address(retailer.publicKey), points) }
-                    .flatMap {
-                        claimPromoApi.claim(walletManager.getWallet().address, retailer.publicKey, it.transactionHash, points.value)
-                    }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(IoScheduler())
-                    .bindLoader(progressBar)
-                    .subscribe({
-                        callForPromoCodes()
-                    }, {
-                        Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
-                        Log.e("kasper", "$it")
-                    })
-        }
         if (retailer.balance >= retailer.promoCodePrice) {
-            claimPromoCodeButton.show()
+            claimPromoCodeButton.text = "Claim promocode!"
+            claimPromoCodeButton.setOnClickListener {
+                val points = Uint256(retailer.promoCodePrice)
+                disposable = yabContractService
+                        .executeRx { claimPromoCode(Address(retailer.publicKey), points) }
+                        .flatMap {
+                            claimPromoApi.claim(walletManager.getWallet().address, retailer.publicKey, it.transactionHash, points.value)
+                        }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(IoScheduler())
+                        .bindLoader(progressBar)
+                        .subscribe({
+                            callForPromoCodes()
+                        }, {
+                            Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
+                            Log.e("kasper", "$it")
+                        })
+            }
         } else {
-            claimPromoCodeButton.hide()
+            claimPromoCodeButton.text = "Insufficient funds"
+            claimPromoCodeButton.setOnClickListener { }
         }
     }
 
