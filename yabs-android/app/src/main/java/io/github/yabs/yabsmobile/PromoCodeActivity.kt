@@ -48,6 +48,7 @@ class PromoCodeActivity : AppCompatActivity() {
                         .subscribe({
                             callForPromoCodes()
                         }, {
+                            retailerCoinsTextView.text = (retailer.balance - retailer.promoCodePrice).toString()
                             Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
                             Log.e("kasper", "$it")
                         })
