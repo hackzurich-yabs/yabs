@@ -45,7 +45,7 @@ class RetailerDetails : AppCompatActivity() {
                         Observable.fromFuture(yabsContract.claimPromoCode(Address(retailer.publicKey), points))
                     }
                     .flatMap {
-                        claimPromoApi.claim(walletManager.getWallet().ecKeyPair.publicKey.toString(), retailer.publicKey, it.transactionHash, points.value)
+                        claimPromoApi.claim(walletManager.getWallet().address, retailer.publicKey, it.transactionHash, points.value)
                     }
                     .subscribe({
                         Toast.makeText(this, "PromoCode : $it", Toast.LENGTH_LONG).show()
