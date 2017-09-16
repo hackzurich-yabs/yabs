@@ -8,7 +8,7 @@ import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
 import java.util.*
 
-class BuyOffersActivity : BuySellOfferActivity() {
+class YouAreSellingActivity : BuySellOfferActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class BuyOffersActivity : BuySellOfferActivity() {
 
     companion object {
         fun start(context: Context, retailer: Retailer) {
-            context.startActivity(intent(context, retailer, BuyOffersActivity::class.java))
+            context.startActivity(intent(context, retailer, YouAreSellingActivity::class.java))
         }
     }
 }

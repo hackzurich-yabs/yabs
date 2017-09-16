@@ -52,6 +52,9 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
             disposable = createOffer(offerData = OfferData(userKey = walletManager.getWallet().address, uid = 0L, points = points, yabsPoints = yabs, retailerKey = retailer.publicKey))
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe {
+                        addOfferDialog.hide()
+                    }
                     .bindLoader(progressBar)
                     .subscribe({
                         Toast.makeText(this, "Udalo sie!!", Toast.LENGTH_LONG).show()
@@ -66,7 +69,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         buyOfferYabsTextView.text = offer.yabsPoints.toString()
         buyOfferRateTextView.text = (offer.points.toDouble() / offer.yabsPoints.toDouble()).toString()
         setOnClickListener {
-            disposable = fulFillOffer(offer.uid, walletManager.getWallet().address)
+            disposable = fulFillOffer(offer.uid, offer.userKey)
                     .subscribeOn(IoScheduler())
                     .observeOn(AndroidSchedulers.mainThread())
                     .bindLoader(progressBar)
