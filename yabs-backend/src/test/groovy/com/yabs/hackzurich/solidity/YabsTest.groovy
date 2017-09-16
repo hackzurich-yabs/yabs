@@ -22,7 +22,7 @@ class YabsTest {
     @Ignore
     @Test
     void shouldDeploy() throws Exception {
-        Yabs.deploy(web3j, credentials, GAS_PRICE, Contract.GAS_LIMIT, BigInteger.ZERO)
+        YabsContract.deploy(web3j, credentials, GAS_PRICE, Contract.GAS_LIMIT, BigInteger.ZERO)
                 .get()
                 .println()
     }

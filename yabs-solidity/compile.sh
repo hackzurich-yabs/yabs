@@ -1,1 +1,1 @@
-solc Yabs.sol --overwrite --bin --abi --optimize -o .
+solc YabsContract.sol --overwrite --bin --abi --optimize -o .
