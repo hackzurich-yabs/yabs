@@ -17,7 +17,7 @@ class YabsApplication : MultiDexApplication() {
         RetailerDetails.contractApi = ContractAdressApi.INSTANCE
         RetailerDetails.claimPointsApi = ClaimPointsApi.INSTANCE
         RetailerDetails.claimPromoApi = ClaimPromoCodeApi.INSTANCE
-        SellActivity.api = GetOffersApi.INSTANCE
+        BuySellOfferActivity.api = OffersApi.INSTANCE
     }
 }
 

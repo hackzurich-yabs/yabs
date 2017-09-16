@@ -58,7 +58,10 @@ class RetailerDetails : AppCompatActivity() {
                     })
         }
         sellPointsButton.setOnClickListener {
-            SellActivity.start(this, retailer)
+            SellOffersActivity.start(this, retailer)
+        }
+        buyPointsButton.setOnClickListener {
+            BuyOffersActivity.start(this, retailer)
         }
     }
 
