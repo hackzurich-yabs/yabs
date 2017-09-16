@@ -26,7 +26,7 @@ class RetailerDetails : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.retailer_details)
-        retailerName.text = retailer.name
+        setRetailerName(retailer.name)
         retailerCoinsTextView.text = retailer.balance
         yabsAmountText.text = "You have $yabsAmount yabs"
         scanReceiptButton.setOnClickListener {
@@ -41,6 +41,15 @@ class RetailerDetails : AppCompatActivity() {
         }
         buyPointsButton.setOnClickListener {
             YouAreBuyingActivity.start(this, retailer, yabsAmount)
+        }
+    }
+
+    fun setRetailerName(name: String) {
+        when (name) {
+            "Coop" -> retailerImageView.setImageResource(R.drawable.coop)
+            "Fashwell" -> retailerImageView.setImageResource(R.drawable.fashwell)
+            "Siroop" -> retailerImageView.setImageResource(R.drawable.siroop)
+            "Zalando" -> retailerImageView.setImageResource(R.drawable.zalando)
         }
     }
 
