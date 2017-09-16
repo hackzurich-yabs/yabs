@@ -21,5 +21,4 @@ class WalletRepository {
         return WalletUtils.loadCredentials(password, new File(directory, walletFile))
     }
 
-
 }
