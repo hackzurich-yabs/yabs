@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         disposable = retailersApi.balances(wallet.address)
                 .subscribeOn(IoScheduler())
                 .observeOn(AndroidSchedulers.mainThread())
+                .bindLoader(progressBar)
                 .subscribe({
                     retailerListView.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.main_retailer_field) { holder, item ->
                         holder.itemView.retailerNameTextView.text = item.name
