@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/addButtonColor</item>
     </style>
 
+    <style name="menutext" parent="@android:style/Widget.Material.Button">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:background">@drawable/menu_text_background</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_width">150dp</item>
+    </style>
+
 </resources>

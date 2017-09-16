@@ -32,32 +32,32 @@
                 android:layout_gravity="center"
                 android:orientation="vertical">
 
-                <Button
+                <TextView
                     android:id="@+id/scanReceiptButton"
-                    android:layout_width="match_parent"
+                    style="@style/menutext"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="Scan receipt" />
 
-                <Button
+                <TextView
                     android:id="@+id/claimPromoButton"
-                    android:layout_width="match_parent"
+                    style="@style/menutext"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="Promo codes" />
 
-                <Button
+                <TextView
                     android:id="@+id/buyPointsButton"
-                    android:layout_width="match_parent"
+                    style="@style/menutext"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="Buy points" />
 
-                <Button
+                <TextView
                     android:id="@+id/sellPointsButton"
-                    android:layout_width="match_parent"
+                    style="@style/menutext"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:text="Sell points" />
             </LinearLayout>
         </FrameLayout>
