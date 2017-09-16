@@ -10,7 +10,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_retailer_field.view.*
-import kotlinx.android.synthetic.main.retailer_item.view.*
 
 class MainActivity : AppCompatActivity() {
 
