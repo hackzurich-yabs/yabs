@@ -57,6 +57,9 @@ class RetailerDetails : AppCompatActivity() {
                         Log.e("kasper", "$it")
                     })
         }
+        sellPointsButton.setOnClickListener {
+            SellActivity.start(this, retailer)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

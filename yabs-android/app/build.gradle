@@ -55,7 +55,6 @@ dependencies {
     implementation("com.elpassion.android.commons:recycler:$android_commons_version") {
         exclude group: "com.android.support"
     }
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

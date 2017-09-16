@@ -19,6 +19,6 @@ class WalletManager(private val context: Context) {
             walletFileName = fullNewWalletFile
             Log.e("kasper", "walletManager created $fullNewWalletFile")
         }
-        return WalletUtils.loadCredentials("password", File(File(context.filesDir, "credentials"), walletFileName))
+        return WalletUtils.loadCredentials("password", File(credentialsVault, walletFileName))
     }
 }
