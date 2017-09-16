@@ -21,6 +21,7 @@ class YabsApplication : MultiDexApplication() {
         PromoCodeActivity.claimPromoApi = ClaimPromoCodeApi.INSTANCE
         BuySellOfferActivity.api = OffersApi.INSTANCE
         BuySellOfferActivity.yabContractService = yabContractService
+        BuySellOfferActivity.walletManager = walletManager
     }
 }
 
