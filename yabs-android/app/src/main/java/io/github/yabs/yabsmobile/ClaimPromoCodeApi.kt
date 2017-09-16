@@ -10,7 +10,7 @@ interface ClaimPromoCodeApi {
     @GET("claimPromoCode")
     fun claim(@Query("userKey") userKey: String,
               @Query("retailerKey") retailerKey: String,
-              @Query("transactionHas") transactionHas: String,
+              @Query("transactionHash") transactionHas: String,
               @Query("points") points: BigInteger): Observable<String>
 
     companion object {
