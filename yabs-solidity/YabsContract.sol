@@ -1,5 +1,6 @@
 pragma solidity ^0.4.16;
 
+
 contract YabsContract {
 
     mapping (address => mapping (address => uint256)) public balances;
@@ -17,6 +18,12 @@ contract YabsContract {
 
     function YabsContract() {
         balances[msg.sender][0x0] = 1000000000000000000000;
+    }
+
+    function transferYabs(address receiver, uint256 yabs) {
+        assert(balances[msg.sender][0x0] >= yabs);
+        balances[msg.sender][0x0] = balances[msg.sender][0x0] - yabs;
+        balances[receiver][0x0] = balances[receiver][0x0] + yabs;
     }
 
     function getBalance(address user, address retailer) constant returns (uint256) {
