@@ -198,12 +198,5 @@
         </LinearLayout>
     </FrameLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-
+    <include layout="@layout/progress" />
 </FrameLayout>
