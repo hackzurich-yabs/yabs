@@ -33,9 +33,7 @@ abstract class BuySellOfferActivity : AppCompatActivity() {
         offersList.layoutManager = LinearLayoutManager(this)
         disposable = api.map { extractOffers(it) }
                 .subscribe({
-                    offersList.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.offer_field) { holder, item ->
-                        bindOffer(holder, item)
-                    }
+                    offersList.adapter = basicAdapterWithLayoutAndBinder(it, R.layout.offer_field, this::bindOffer)
                 }, {
                     Log.e("kasper", "$it")
                 })
